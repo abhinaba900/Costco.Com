@@ -13,12 +13,12 @@ async function authMiddleware(req, res, next) {
           "Unauthorized: No authentication token provided. Please log in.",
       });
     } else {
-      jwt.verify(authToken, process.env.AUTH_KEY, (err, data) => {
+      jwt.verify(authToken, process.env.AUTH_key, (err, data) => {
         if (data) {
           // If authToken is not valid, check refreshToken
           next();
         } else {
-          jwt.verify(refreshToken, process.env.REFRESH_KEY, (err, data) => {
+          jwt.verify(refreshToken, process.env.REFRESH_key, (err, data) => {
             if (data) {
               next();
             } else {
