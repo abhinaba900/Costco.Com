@@ -98,13 +98,13 @@ userRouter.post("/login", async (req, res) => {
     );
 
     res.cookie("authToken", authToken, {
-      httpOnly: true,
+      httpOnly: false,
       maxAge: 24 * 60 * 60 * 1000,
       sameSite: "none",
     });
 
     res.cookie("refreshToken", refreshToken, {
-      httpOnly: true,
+      httpOnly: false,
       maxAge: 7 * 24 * 60 * 60 * 1000,
       sameSite: "none",
     });
