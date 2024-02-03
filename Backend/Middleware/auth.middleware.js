@@ -5,7 +5,7 @@ require("dotenv").config();
 async function authMiddleware(req, res, next) {
   try {
     const { authToken, refreshToken } = req.cookies;
-
+     console.log(authToken,refreshToken);
     // Check if both tokens are missing
     if (!authToken && !refreshToken) {
       return res.status(403).json({
