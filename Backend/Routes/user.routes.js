@@ -4,8 +4,66 @@ const User = require("../Models/user.models");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const validator = require("validator");
+const nodemailer = require("nodemailer");
+const uuid = require("uuid");
 require("dotenv").config();
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "subhamsana700@gmail.com",
+    pass: "dvpt birt vcxv uruc",
+  },
+});
 
+// Dummy database
+let users = {};
+
+// Registration route
+userRouter.post("/register-email", (req, res) => {
+  const { email } = req.body;
+  
+  const userId = uuid.v4();
+  const verificationToken = Math.floor(100000 + Math.random() * 900000); // Generate unique verification token
+
+  // Store user with verification token and not verified status
+  users[userId] = { email, verificationToken, verified: false };
+
+  // Email verification link
+  const verificationLink = `${req.url}/user/verify-email?token=${verificationToken}&userId=${userId}`;
+
+  const mailOptions = {
+    from: "subhamsana700@gmail.com",
+    to: email,
+    subject: "Verify your email",
+    text: `Please click on the following link to verify your email: go to official website. your varification token is:-"${verificationToken}" and your user id is:-"${userId}" and your varification link is "${verificationLink}"`,
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log(error);
+      res.status(500).send("Error sending verification email");
+    } else {
+      console.log("Verification email sent: " + info.response);
+      res
+        .status(200)
+        .send("Registration successful, please verify your email.");
+    }
+  });
+});
+
+// Verification route
+userRouter.post("/verify-email", (req, res) => {
+  const { token, userId } = req.body;
+
+  const user = users[userId];
+
+  if (user && user.verificationToken === token) {
+    user.verified = true; // Mark the user as verified
+    res.send("Email successfully verified.");
+  } else {
+    res.status(400).send("Invalid or expired verification link.");
+  }
+});
 userRouter.post("/register", async (req, res) => {
   const { name, email, password } = req.body;
 
