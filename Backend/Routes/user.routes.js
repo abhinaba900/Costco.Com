@@ -98,15 +98,15 @@ userRouter.post("/login", async (req, res) => {
     );
 
     res.cookie("authToken", authToken, {
-      httpOnly: false,
       maxAge: 24 * 60 * 60 * 1000,
       sameSite: "none",
+      secure: true,
     });
 
     res.cookie("refreshToken", refreshToken, {
-      httpOnly: false,
       maxAge: 7 * 24 * 60 * 60 * 1000,
       sameSite: "none",
+      secure: true,
     });
 
     // 200 OK or 202 Accepted is more appropriate for a successful operation
