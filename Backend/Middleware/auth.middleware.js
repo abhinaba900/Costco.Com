@@ -1,64 +1,48 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
+// This function checks for authentication tokens in the request cookies
 async function authMiddleware(req, res, next) {
   try {
     const { authToken, refreshToken } = req.cookies;
-    console.log(authToken, refreshToken);
 
-    // Simplify the token presence check
+    // Check if both tokens are missing
     if (!authToken && !refreshToken) {
-      return res
-        .status(403)
-        .json({
-          message: "Unauthorized and cookie not found, please login first.",
-        });
+      return res.status(403).json({
+        message:
+          "Unauthorized: No authentication token provided. Please log in.",
+      });
     }
 
-    // Function to verify token
-    const verifyToken = (token, secretKey, onFail, onSuccess) => {
-      jwt.verify(token, secretKey, (err, user) => {
-        if (err) return onFail();
-        if (user) return onSuccess();
-      });
-    };
-
+    // Attempt to verify the authToken first
     if (authToken) {
-      // Verify authToken
-      verifyToken(
-        authToken,
-        process.env.AUTH_key,
-        () => {
-          // If authToken fails, try refreshToken
-          if (refreshToken) {
-            verifyToken(
-              refreshToken,
-              process.env.REFRESH_key,
-              () =>
-                res
-                  .status(403)
-                  .json({ message: "Unauthorized, please login again." }),
-              () => next() // refreshToken is valid
-            );
-          } else {
-            res
-              .status(403)
-              .json({ message: "Unauthorized token expired or invalid." });
-          }
-        },
-        () => next() // authToken is valid
-      );
-    } else if (refreshToken) {
-      // Directly verify refreshToken if authToken is not present
-      verifyToken(
-        refreshToken,
-        process.env.REFRESH_key,
-        () =>
-          res
-            .status(403)
-            .json({ message: "Unauthorized, please login again." }),
-        () => next() // refreshToken is valid
-      );
+      try {
+        jwt.verify(authToken, process.env.AUTH_KEY);
+        // If authToken is valid, proceed to the next middleware
+        return next();
+      } catch (err) {
+        // authToken verification failed
+        console.log("Auth token verification failed:", err.message);
+      }
+    }
+
+    // If authToken is not valid or not provided, try refreshToken
+    if (refreshToken) {
+      try {
+        jwt.verify(refreshToken, process.env.REFRESH_KEY);
+        // If refreshToken is valid, proceed to the next middleware
+        return next();
+      } catch (err) {
+        // refreshToken verification failed
+        return res.status(403).json({
+          message: "Unauthorized: Please log in again.",
+        });
+      }
+    } else {
+      // No valid tokens provided
+      return res.status(403).json({
+        message: "Unauthorized: Token expired or invalid.",
+      });
     }
   } catch (error) {
     return res.status(500).json({ message: error.message });
