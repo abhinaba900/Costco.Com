@@ -87,13 +87,13 @@ userRouter.post("/login", async (req, res) => {
 
     const authToken = jwt.sign(
       { userId: findEmail._id },
-      process.env.AUTH_KEY, // Ensure your environment variables are consistently named
+      process.env.AUTH_KEY || "authToken", // Ensure your environment variables are consistently named
       { expiresIn: "24h" }
     );
 
     const refreshToken = jwt.sign(
       { userId: findEmail._id },
-      process.env.REFRESH_KEY, // Ensure your environment variables are consistently named
+      process.env.REFRESH_KEY || "refreshToken", // Ensure your environment variables are consistently named
       { expiresIn: "7d" }
     );
 
