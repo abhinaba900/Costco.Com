@@ -4,23 +4,27 @@ const { Products } = require("../Models/user.models");
 
 // GET all products
 productRouter.get("/", async (req, res) => {
-  let query = Products.find({});
-  // Sorting
-  if (req.query.sort) {
-    const sortBy = req.query.sort.startsWith("-")
-      ? [req.query.sort.substring(1), "desc"]
-      : [req.query.sort, "asc"];
-    query = query.sort({ [sortBy[0]]: sortBy[1] });
-  }
+  const { sort, search } = req.query;
+  let query = {};
 
-  // Searching with regex
-  if (req.query.search) {
-    console.log(req.query.search);
-    query = query.where({ name: new RegExp(req.query.search, "i") }); // assuming 'name' is the field to search
+  // Constructing a search query if a search term is provided
+  if (search) {
+    query.$or = [
+      { name: { $regex: search, $options: "i" } }, // Searches in 'name'
+      // Add other fields you want to include in the search, for example:
+      // { description: { $regex: search, $options: 'i' } }
+    ];
   }
 
   try {
-    const products = await query.exec();
+    let productsQuery = Products.find(query);
+
+    // Sorting
+    if (sort) {
+      productsQuery = productsQuery.sort(sort); // Directly use the sort query param
+    }
+
+    const products = await productsQuery;
     res.status(200).send(products);
   } catch (error) {
     res.status(500).send({
