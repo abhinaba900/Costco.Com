@@ -1,11 +1,17 @@
-import React from 'react'
-
+import React from "react";
+import { Spinner, Box } from "@chakra-ui/react";
 function Loading() {
   return (
-    <div>
-      this is loading page
-    </div>
-  )
+    <Box display={"flex"} justifyContent={"center"}>
+      <Spinner
+        thickness="4px"
+        speed="0.65s"
+        emptyColor="gray.200"
+        color="blue.500"
+        size="xl"
+      />
+    </Box>
+  );
 }
 
-export default Loading
+export default Loading;
