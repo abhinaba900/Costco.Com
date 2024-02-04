@@ -19,7 +19,7 @@ function Home() {
     fetchData();
   }, []);
   return (
-    <Box w={"100%"}  bg={"#ECECEC"} overflow={"hidden"}>
+    <Box w={"100%"} bg={"#ECECEC"} overflowX={"hidden"} objectFit={"cover"}>
       <Header />
     </Box>
   );

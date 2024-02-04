@@ -65,7 +65,7 @@ function Header() {
     }, 500);
   };
   return (
-    <Box bg={bg} px={"1em"} overflowX={"hidden"}>
+    <Box w={"100%"} bg={bg} px={"1em"} overflowX={"hidden"}>
       <Flex
         py={2}
         borderColor={borderColor}

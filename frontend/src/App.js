@@ -1,12 +1,13 @@
-
-import './App.css';
-import AllRoutes from './Routes/AllRoutes';
+import "./App.css";
+import Home from "./Components/Home";
+import AllRoutes from "./Routes/AllRoutes";
+import { Box } from "@chakra-ui/react";
 
 function App() {
   return (
-    <div className="App">
-     <AllRoutes/>
-    </div>
+    <Box w={"100%"} overflowX={"hidden"}>
+      <AllRoutes />
+    </Box>
   );
 }
 
