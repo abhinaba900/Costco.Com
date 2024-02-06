@@ -37,8 +37,12 @@ productRouter.get("/", async (req, res) => {
 // GET a single product by ID
 productRouter.get("/:id", async (req, res) => {
   try {
-    const product = await Products.findById(req.params.id);
-    if (!product) {
+    const { id } = req.params;
+    // Adjusted to search for the product using the custom `id` field
+    let ids = Number(id);
+    console.log(typeof id);
+    const product = await Products.find({ id: ids }); // Using ES6 shorthand for { id: id }
+    if (!product || product.length === 0) {
       // If the product with the given ID was not found
       return res.status(404).send({
         message: "Product not found",
@@ -48,7 +52,8 @@ productRouter.get("/:id", async (req, res) => {
     res.status(200).send(product);
   } catch (error) {
     if (error.kind === "ObjectId") {
-      // If the error is due to an invalid object ID
+      // This error check might not be necessary if `id` is not an ObjectId
+      // But you might want to keep some form of validation for the `id`
       return res.status(400).send({
         message: "Invalid product ID",
       });
