@@ -103,9 +103,7 @@ function Header() {
           console.log(response.data.length);
           if (response.data.length === 0) {
             navigate("/error");
-            
-          }
-          else{
+          } else {
             navigate("/products");
           }
         } catch (error) {
@@ -118,7 +116,13 @@ function Header() {
   }, [debouncedSearchTerm]);
 
   return (
-    <Box w={"100%"} bg={bg} px={"1em"} overflowX={"hidden"}>
+    <Box
+      w={"100%"}
+      bg={bg}
+      px={"1em"}
+      overflowX={"hidden"}
+      fontFamily={"poppins"}
+    >
       <Flex
         py={2}
         borderColor={borderColor}
@@ -225,6 +229,7 @@ function Header() {
               p={"0"}
               marginBlockStart={0}
               marginBlockEnd={0}
+              fontWeight={"semibold"}
             >
               Sign In / Register
             </Text>

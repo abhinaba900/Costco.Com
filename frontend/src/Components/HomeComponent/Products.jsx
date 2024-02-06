@@ -24,11 +24,11 @@ function Products() {
     async function fetchData() {
       try {
         const response = await axios.get(
-          "https://lazy-puce-horse-belt.cyclic.app/products"
+          "https://costcocombackend-production.up.railway.app/products"
         );
         // Assuming the API returns an object with an allProducts key that is an array of products
-        console.log(response.data[0].allproducts);
-        const allProducts = response?.data[0]?.allproducts; // Adjusted to access allProducts key
+        console.log(response?.data);
+        const allProducts = response?.data; // Adjusted to access allProducts key
         if (allProducts) {
           setProducts(allProducts);
         } else {
@@ -54,7 +54,13 @@ function Products() {
         </Heading>
         <Grid
           mt={"3em"}
-          templateColumns={{base: "repeat(1, 1fr)", sm: "repeat(2, 1fr)", md: "repeat(3, 1fr)", lg: "repeat(4, 1fr)", xl: "repeat(5, 1fr)"}}
+          templateColumns={{
+            base: "repeat(1, 1fr)",
+            sm: "repeat(2, 1fr)",
+            md: "repeat(3, 1fr)",
+            lg: "repeat(4, 1fr)",
+            xl: "repeat(5, 1fr)",
+          }}
           gap={6}
           borderRadius={"xl"}
           mb={6}

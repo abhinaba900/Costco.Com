@@ -12,10 +12,20 @@ import React, { useEffect, useState } from "react";
 import "./Sass/ProductsCard.css";
 import { Card, CardHeader, CardBody, CardFooter } from "@chakra-ui/react";
 import { FaHeart } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import { MdOutlineDetails } from "react-icons/md";
 function ProductsCard({ data }) {
+  const navigate = useNavigate();
   return (
     <Box p={5} boxShadow="md" borderRadius="lg" aspectRatio={"1 / 1"}>
-      <Box className="img-box" overflow="hidden" borderRadius="md">
+      <Box
+        className="img-box"
+        overflow="hidden"
+        borderRadius="md"
+        onClick={() => {
+          navigate(`/products/${data.id}`);
+        }}
+      >
         <Image
           h={"15em"}
           objectFit={"contain"}
@@ -34,6 +44,14 @@ function ProductsCard({ data }) {
         </Text>
         <Button leftIcon={<FaHeart />} variant="outline" colorScheme="pink">
           Wishlist
+        </Button>
+        <Button
+          leftIcon={<MdOutlineDetails />}
+          variant="outline"
+          colorScheme="pink"
+          onClick={() => navigate(`/products/${data.id}`)}
+        >
+          Get Details
         </Button>
       </Stack>
     </Box>

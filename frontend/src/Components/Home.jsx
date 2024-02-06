@@ -7,6 +7,9 @@ import ForImageSection from "./HomeComponent/ForImageSection";
 import Swipers from "./HomeComponent/Swiper";
 import Products from "./HomeComponent/Products";
 import ProductsCard from "./HomeComponent/ProductsCard";
+import ThreeCatagorySection from "./HomeComponent/ThreeCatagorySection";
+import SameDaySection from "./HomeComponent/SameDaySection";
+import SameSixImage from "./HomeComponent/SameSixImage";
 function Home() {
   useEffect(() => {
     async function fetchData() {
@@ -28,6 +31,9 @@ function Home() {
       <Header />
       <ForImageSection />
       <Swipers />
+      <ThreeCatagorySection />
+      <SameDaySection />
+      <SameSixImage />
       <Footer />
     </Box>
   );
