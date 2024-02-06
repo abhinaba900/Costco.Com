@@ -16,7 +16,7 @@ import { Checkbox } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Loading from './Loading'
+import Loading from "./Loading";
 function Login() {
   const navigate = useNavigate();
   const [show, setShow] = React.useState(false);
@@ -73,11 +73,11 @@ function Login() {
     }
   };
   return (
-    <Box>
+    <Box fontFamily={"poppins"}>
       <Box background={"#ECECEC"} p={"2em"}>
         <Image
-         onClick={() => navigate("/")}
-         cursor={"pointer"}
+          onClick={() => navigate("/")}
+          cursor={"pointer"}
           w={"9.375em"}
           display={"block"}
           mx={"auto"}
@@ -114,6 +114,7 @@ function Login() {
               style={{ display: "flex", flexDirection: "column", gap: "1em" }}
             >
               <Input
+                p={"1.8em"}
                 type="email"
                 placeholder="Email Address"
                 onChange={handleChange}
@@ -123,6 +124,8 @@ function Login() {
               />
               <InputGroup size="md">
                 <Input
+                  overflow={"hidden"}
+                  p={"1.8em"}
                   pr="4.5rem"
                   type={show ? "text" : "password"}
                   placeholder="Password"
@@ -132,7 +135,14 @@ function Login() {
                   required
                 />
                 <InputRightElement width="4.5rem">
-                  <Button h="1.75rem" size="sm" onClick={handleClick}>
+                  <Button
+                    mt={"1.1em"}
+                    objectFit={"contain"}
+                    p={"1.6em"}
+                    h="1.75rem"
+                    size="sm"
+                    onClick={handleClick}
+                  >
                     {show ? <IoMdEyeOff /> : <IoEye />}
                   </Button>
                 </InputRightElement>
@@ -165,6 +175,7 @@ function Login() {
                 value="Sign In"
                 bg={"#2A6293"}
                 color={"white"}
+                p={"2em"}
               >
                 Sign In
               </Button>
@@ -173,15 +184,15 @@ function Login() {
             <Text fontSize={"1.25em"} className="poppins-normal">
               New to Costco?
             </Text>
-            <Input
+
+            <Button
+              p={"2em"}
               cursor={"pointer"}
               color={"#2A6293"}
-              type="button"
-              value="Create an Account"
-              onClick={() => {
-                navigate("/signup");
-              }}
-            />
+              onClick={() => navigate("/signup")}
+            >
+              Create an Account
+            </Button>
           </Box>
         )}
       </Box>

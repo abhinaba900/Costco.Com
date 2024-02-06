@@ -212,6 +212,7 @@ function Header() {
               children={<SearchIcon cursor={"pointer"} color="gray.300" />}
             />
             <Input
+              p={"1.5em"}
               type="tel"
               placeholder="Search"
               onChange={(e) => setSearch(e.target.value)}

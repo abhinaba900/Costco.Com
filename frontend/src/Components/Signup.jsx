@@ -47,8 +47,7 @@ function Signup() {
           duration: 5000,
           isClosable: true,
         });
-      }
-      else{
+      } else {
         const response = await axios.post(
           "https://lazy-puce-horse-belt.cyclic.app/user/register",
           {
@@ -103,7 +102,7 @@ function Signup() {
   }
 
   return (
-    <Box>
+    <Box fontFamily={"poppins"}>
       <Box background={"#ECECEC"} p={"2em"}>
         <Image
           onClick={() => navigate("/")}
@@ -144,6 +143,7 @@ function Signup() {
               style={{ display: "flex", flexDirection: "column", gap: "1em" }}
             >
               <Input
+                p={"2em"}
                 type="text"
                 placeholder="Full Name"
                 onChange={handleChange}
@@ -152,6 +152,7 @@ function Signup() {
                 required
               />
               <Input
+                p={"2em"}
                 type="email"
                 placeholder="Email Address"
                 onChange={handleChange}
@@ -161,6 +162,7 @@ function Signup() {
               />
               <InputGroup size="md">
                 <Input
+                  p={"2em"}
                   pr="4.5rem"
                   type={show ? "text" : "password"}
                   placeholder="Password"
@@ -170,13 +172,20 @@ function Signup() {
                   required
                 />
                 <InputRightElement width="4.5rem">
-                  <Button h="1.75rem" size="sm" onClick={handleClick}>
+                  <Button
+                    size="sm"
+                    mt={"1.5em"}
+                    objectFit={"contain"}
+                    p={"1.6em"}
+                    onClick={handleClick}
+                  >
                     {show ? <IoMdEyeOff /> : <IoEye />}
                   </Button>
                 </InputRightElement>
               </InputGroup>
               <InputGroup size="md">
                 <Input
+                  p={"2em"}
                   pr="4.5rem"
                   type={show1 ? "text" : "password"}
                   placeholder="Confirm Password"
@@ -186,7 +195,13 @@ function Signup() {
                   required
                 />
                 <InputRightElement width="4.5rem">
-                  <Button h="1.75rem" size="sm" onClick={handleClick1}>
+                  <Button
+                    size="sm"
+                    mt={"1.5em"}
+                    objectFit={"contain"}
+                    p={"1.6em"}
+                    onClick={handleClick1}
+                  >
                     {show1 ? <IoMdEyeOff /> : <IoEye />}
                   </Button>
                 </InputRightElement>
@@ -213,6 +228,7 @@ function Signup() {
                 value="Create Account"
                 bg={"#2A6293"}
                 color={"white"}
+                p={"2em"}
               >
                 Create Account
               </Button>
