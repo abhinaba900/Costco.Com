@@ -6,6 +6,7 @@ import Signup from "../Components/Signup";
 import Loading from "../Components/Loading";
 import Error from "../Components/Error";
 import ForgotPasswoard from "../Components/ForgotPasswoard";
+import Products from "../Components/HomeComponent/Products";
 function AllRoutes() {
   return (
     <div>
@@ -15,6 +16,7 @@ function AllRoutes() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgot-password" element={<ForgotPasswoard />} />
         <Route path="*" element={<Error />} />
+        <Route path="/products" element={<Products />} />
       </Routes>
     </div>
   );

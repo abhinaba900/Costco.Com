@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Box,
   Flex,
@@ -18,6 +18,7 @@ import {
   IconButton,
 } from "@chakra-ui/react";
 import Shope from "./Shope";
+import axios from "axios";
 import { ChevronDownIcon, SearchIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
@@ -31,6 +32,7 @@ function Header() {
   const borderColor = useColorModeValue("gray.200", "gray.700");
   const closeTimeoutId = React.useRef();
   const [mobileView, setMobileView] = React.useState(false);
+  const [Search, setSearch] = React.useState("");
 
   React.useEffect(() => {
     const handleResize = () => {
@@ -42,6 +44,8 @@ function Header() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+  console.log(Search);
+  const handleSearch = () => {};
 
   const openMenu = () => {
     clearTimeout(closeTimeoutId.current); // Clear any pending timeout to close the menu
@@ -64,6 +68,55 @@ function Header() {
       setIsGroceryOpen(false);
     }, 500);
   };
+
+  function useDebounce(value, delay) {
+    // State and setters for debounced value
+    const [debouncedValue, setDebouncedValue] = useState(value);
+
+    useEffect(() => {
+      // Set debouncedValue to value (passed in) after the specified delay
+      const handler = setTimeout(() => {
+        setDebouncedValue(value);
+      }, delay);
+
+      // Cleanup function to cancel the timeout if value or delay changes
+      return () => {
+        clearTimeout(handler);
+      };
+    }, [value, delay]); // Only re-call effect if value or delay changes
+
+    return debouncedValue;
+  }
+
+  const debouncedSearchTerm = useDebounce(Search, 500);
+
+  useEffect(() => {
+    if (debouncedSearchTerm) {
+      // Call your API or perform the action with the debounced term
+      console.log("Performing API call with:", debouncedSearchTerm);
+      async function fetchData() {
+        try {
+          const response = await axios.get(
+            "https://lazy-puce-horse-belt.cyclic.app/products?search=" +
+              debouncedSearchTerm
+          );
+          console.log(response.data.length);
+          if (response.data.length === 0) {
+            navigate("/error");
+            
+          }
+          else{
+            navigate("/products");
+          }
+        } catch (error) {
+          navigate("/error");
+        }
+      }
+
+      fetchData();
+    }
+  }, [debouncedSearchTerm]);
+
   return (
     <Box w={"100%"} bg={bg} px={"1em"} overflowX={"hidden"}>
       <Flex
@@ -154,7 +207,11 @@ function Header() {
             <InputRightElement
               children={<SearchIcon cursor={"pointer"} color="gray.300" />}
             />
-            <Input type="tel" placeholder="Search" />
+            <Input
+              type="tel"
+              placeholder="Search"
+              onChange={(e) => setSearch(e.target.value)}
+            />
           </InputGroup>
         </GridItem>
 

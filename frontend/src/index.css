@@ -1,1 +1,980 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
+body {
+  font-family: "Lato";
+  font-weight: 300;
+}
+
+/*coronavirus warning*/
+.covid-container {
+  font-weight: 400;
+  text-align: center;
+  background-color: rgb(255, 187, 0);
+  padding: 5px;
+}
+
+/*nav bar (while supplies last, first row)*/
+.nav1-container {
+  max-width: 1430px;
+  margin: auto;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgb(16, 109, 170);
+  display: flex;
+  justify-content: flex-end;
+  list-style-type: none;
+  padding-top: 18px;
+}
+
+.nav1-items {
+  width: 85%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  list-style-type: none;
+}
+
+.nav1-item {
+  margin-right: 35px;
+}
+
+.nav1-item:hover {
+  text-decoration: underline;
+  transition: 0.5s;
+}
+
+/*'find a warehouse' dropdown*/
+.findWarehouse {
+  position: relative;
+}
+
+.findWarehouse-visible {
+  display: flex;
+  align-items: center;
+  padding-bottom: 2px;
+}
+
+.findWarehouse-hidden {
+  background-color: white;
+  border: 1px solid black;
+  position: absolute;
+  padding: 20px;
+  z-index: 3;
+  right: -70px;
+  width: 350px;
+  margin-top: 1px;
+  display: none;
+}
+
+.findWarehouse-hidden h3 {
+  color: black;
+}
+
+.findwarehouse-area-title,
+.findWarehouse-items-title {
+  font-size: 12px;
+}
+
+.findWarehouse-items-title {
+  padding: 3px 0px 3px 0px;
+}
+
+.findWarehouse-area-input {
+  width: 100%;
+  padding: 5px;
+  margin: 10px 0px 10px 0px;
+}
+
+.findWarehouse-items-both {
+  display: flex;
+}
+
+.findWarehouse-items-part1 {
+  margin-right: 25px;
+}
+
+.findWarehouse-item {
+  display: flex;
+  align-items: center;
+  padding: 3px;
+}
+
+.findWarehouse-item ion-icon {
+  margin: 0px 6px 0px 6px;
+  font-size: 20px;
+}
+
+.findWarehouse-button button {
+  width: 100%;
+  padding: 8px;
+  margin-top: 10px;
+  background-color: rgb(16, 109, 170);
+  color: white;
+}
+
+/*'US' dropdown menu (only activated by hover)*/
+.US-dropdown {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.US-dropdown-visible {
+  display: flex;
+  align-items: center;
+  padding-bottom: 1px;
+}
+
+.US-dropdown-selection {
+  position: absolute;
+  margin-top: 18px;
+  padding: 12px;
+  right: 0px;
+  background-color: white;
+  z-index: 3;
+  width: 250px;
+  border: 1px solid black;
+  display: none;
+}
+
+.US-title,
+.US-item {
+  list-style-type: none;
+  padding: 7px;
+  font-size: 18px;
+}
+
+.US-item:hover {
+  background-color: rgba(184, 207, 255, 0.5);
+  text-decoration: underline;
+}
+
+.US-title {
+  color: black;
+}
+
+/*nav LOGO, SEARCH BAR, SIGN IN, etc (second row)*/
+.nav-2ndRow-container {
+  max-width: 1430px;
+  font-weight: 400;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/*LOGO*/
+.nav-2ndRow-logo {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+}
+
+.costco-logo {
+  width: 180px;
+}
+
+/*SEARCH BAR*/
+.nav-2ndRow-search {
+  width: 55%;
+  margin-right: 10px;
+  border: 1px solid black;
+  display: flex;
+  align-items: center;
+}
+
+.nav-search-input {
+  width: 96%;
+  padding: 10px;
+  border: none;
+}
+
+.nav-search-icon {
+  font-size: 23px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-search-icon ion-icon {
+  color: rgb(9, 85, 136);
+}
+
+/*SIGN IN/REG, ORDER & RETURN, CART container*/
+.nav-2ndRow-signin {
+  width: 375px;
+  display: flex;
+  white-space: nowrap;
+  align-items: center;
+}
+
+.nav-2ndRow-signin div {
+  margin-right: 20px;
+}
+
+.nav-2ndRow-signin a {
+  text-decoration: none;
+  color: rgb(16, 109, 170);
+}
+
+.nav-2ndRow-signin a:hover {
+  text-decoration: underline;
+  transition: 0.5s;
+}
+
+.nav-cart ion-icon {
+  color: rgb(16, 109, 170);
+  font-size: 25px;
+  margin-right: 5px;
+}
+
+.nav-cart {
+  display: flex;
+  align-items: center;
+}
+
+/*<!--HIDDEN nav LOGO, SEARCH BAR, SIGN IN, etc (second row)-->*/
+.nav-2ndRow-container-hidden {
+  display: none;
+}
+
+.nav-2ndRow1-hidden {
+  max-width: 600px;
+  display: flex;
+  justify-content: space-between;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding-top: 10px;
+}
+
+.nav-logo-hidden {
+  width: 120px;
+}
+
+.nav-logo-hidden img {
+  width: 100%;
+}
+
+.nav-2ndRow2-hidden {
+  max-width: 600px;
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.nav-shop-hidden {
+  display: flex;
+  background-color: rgb(16, 109, 170);
+  padding: 7px;
+  color: white;
+  margin-left: 10px;
+}
+
+.nav-shop-hidden p {
+  margin-left: 8px;
+}
+
+.nav-search-container-hidden {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.nav-search-hidden {
+  width: 90%;
+  margin: 0px 2px 0px 2px;
+}
+
+.nav-search-hidden input {
+  width: 100%;
+  padding: 6px;
+}
+
+/*Navbar blue, shop all departments...*/
+.navbar-blue-container {
+  background-color: rgb(16, 109, 170);
+  padding: 10px;
+}
+
+.navbar-blue-items {
+  max-width: 1430px;
+  margin: auto;
+  font-size: 18px;
+  color: white;
+  display: flex;
+  list-style-type: none;
+  flex-wrap: wrap;
+}
+
+.navbar-blue-item {
+  margin: 0px 35px 0px 10px;
+}
+
+.navbar-blue-dropdown {
+  display: flex;
+  margin-left: 10px;
+}
+
+.navbar-blue-dropdown ion-icon {
+  font-size: 25px;
+}
+
+/*Welcome to the costco employee website*/
+.welcome-container {
+  max-width: 1430px;
+  margin: auto;
+  padding-bottom: 20px;
+}
+
+.welcome-text {
+  padding: 10px 0px 10px 0px;
+  margin-left: 10px;
+}
+
+.welcome-chris {
+  display: flex;
+  align-items: center;
+  font-size: 25px;
+}
+
+.welcome-chris-text {
+  margin-left: 20px;
+}
+
+/*Main*/
+.main-container {
+  max-width: 1430px;
+  margin: auto;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 100px;
+}
+
+/*Main FIRST half (employee self-service column)*/
+.main-firstHalf {
+  width: 46%;
+}
+
+/*title of every single container in main, blue header background*/
+.main-container-title {
+  text-align: center;
+  background-color: rgb(16, 109, 170);
+  color: white;
+  font-size: 20px;
+  font-weight: 300;
+  padding: 10px;
+}
+
+/*Employee self service*/
+.main-firsthalf-background {
+  background-color: rgba(194, 219, 255, 0.767);
+  padding: 10px;
+}
+
+.employee-info-container {
+  background-color: white;
+  padding-bottom: 10px;
+  margin: 10px 0px 0px 0px;
+}
+
+.employee-login {
+  padding: 10px;
+  border: 1px solid green;
+  background-color: green;
+  color: white;
+  display: inline-block;
+  margin: 10px 10px 0px 10px;
+}
+
+.employee-login:hover {
+  background-color: rgb(0, 97, 0);
+  transition: 0.5s;
+}
+
+.employee-new {
+  margin: 10px;
+}
+
+.employee-new a {
+  color: rgb(16, 109, 170);
+  text-decoration: none;
+}
+
+.employee-former {
+  padding: 10px;
+  border: 1px solid rgb(224, 224, 224);
+  background-color: rgb(224, 224, 224);
+  display: inline-block;
+  margin: 0 10px 0 10px;
+  color: rgb(16, 109, 170);
+}
+
+.employee-former a {
+  text-decoration: none;
+  color: rgb(16, 109, 170);
+}
+
+.employee-former:hover {
+  background-color: rgb(207, 207, 207);
+  transition: 0.5s;
+}
+
+.employee-ESS {
+  margin: 10px;
+}
+
+.employee-ESS a {
+  color: rgb(16, 109, 170);
+  text-decoration: none;
+}
+
+.employee-loginIssues {
+  margin: 10px;
+}
+
+.employee-loginIssues a {
+  color: rgb(16, 109, 170);
+  text-decoration: none;
+}
+
+.employee-notice {
+  padding: 10px;
+  margin: 10px 10px 0px 10px;
+  border: 1px solid rgb(16, 109, 170);
+  background-color: rgba(208, 226, 255, 0.671);
+}
+
+/*pay card & historical ePayroll*/
+.payCard-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.payCard-1 {
+  width: 46%;
+  background-color: white;
+  padding: 10px;
+}
+
+.payCard-2 {
+  width: 46%;
+  background-color: white;
+  padding: 10px;
+}
+
+/*benefits*/
+.benefits-container {
+  background-color: rgba(228, 228, 228, 0.89);
+  padding: 10px;
+  margin: 10px 0 10px 0;
+}
+
+/*SAP*/
+.SAP-container {
+  background-color: rgba(228, 228, 228, 0.89);
+  padding: 10px;
+  margin: 10px 0 10px 0;
+}
+
+/*Main SECOND half (costco today column)*/
+.main-secondHalf {
+  width: 46%;
+}
+
+/*costco today*/
+.costcoToday-container {
+  padding: 10px;
+  background-color: rgba(194, 219, 255, 0.767);
+}
+
+.costcoToday-container h1 {
+  margin-bottom: 10px;
+}
+
+.costcoToday-info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.costcoToday-info div {
+  width: 46%;
+}
+
+.costcoToday-pic {
+  width: 100%;
+}
+
+/*employee job bank & journeys*/
+.jobBank-journeys-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0 10px 0;
+}
+
+.jobBank-container {
+  width: 46%;
+  background-color: rgba(228, 228, 228, 0.89);
+  padding: 10px;
+}
+
+.journeys-container {
+  width: 46%;
+  background-color: rgba(228, 228, 228, 0.89);
+  padding: 10px;
+}
+
+/*whistleblower*/
+.whistleblower {
+  background-color: rgba(228, 228, 228, 0.89);
+  padding: 10px;
+}
+
+/* FOOTER */
+
+/*Footer row one*/
+.footer-one {
+  background-color: rgb(199, 199, 199);
+}
+
+.footer-one-container {
+  max-width: 1430px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  padding: 30px 0px 30px 10px;
+  border-bottom: 1px solid rgba(112, 112, 112, 0.377);
+}
+
+.footer-one-section {
+  width: 25%;
+}
+
+.footer-one-title {
+  margin-bottom: 8px;
+}
+
+.help-circle-container {
+  display: flex;
+  align-items: center;
+}
+
+.help-circle-container ion-icon {
+  font-size: 20px;
+  color: rgb(16, 109, 170);
+  margin-right: 5px;
+}
+
+.footer-one-section p {
+  font-size: 12px;
+}
+
+.findAWarehouse {
+  display: flex;
+  width: 80%;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  background-color: white;
+}
+
+.findAWarehouse input {
+  width: 90%;
+  border: none;
+}
+
+.findAWarehouse ion-icon {
+  font-size: 20px;
+  color: rgb(16, 109, 170);
+}
+
+.emailOffers {
+  display: flex;
+  align-items: center;
+}
+
+.emailOffers1 {
+  width: 60%;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  background-color: white;
+  border-right: none;
+}
+
+.emailOffers1 input {
+  padding: 4.5px;
+  width: 100%;
+  border: none;
+}
+
+.emailOffers2 {
+  width: 30px;
+  padding: 5px;
+  background-color: rgb(16, 109, 170);
+  color: white;
+  border: 1px solid rgb(16, 109, 170);
+  border-left: none;
+  text-align: center;
+}
+
+.socialMediaIcons ion-icon {
+  font-size: 25px;
+  margin-right: 5px;
+}
+
+.facebookIcon {
+  color: rgb(67, 86, 255);
+}
+
+.pinterestIcon {
+  color: rgb(201, 0, 0);
+}
+
+.instagramIcon {
+  color: rgb(88, 42, 42);
+}
+
+/*Footer row one HIDDEN*/
+.footer-one-hidden {
+  display: none;
+  background-color: rgb(199, 199, 199);
+}
+
+.footer-one-container-hidden {
+  max-width: 600px;
+  margin: auto;
+  padding: 25px 0px 25px 0px;
+  border-bottom: 1px solid rgba(116, 116, 116, 0.507);
+}
+
+.footer-one-title-hidden {
+  margin-left: 10px;
+}
+
+.footer-one-input-hidden {
+  display: flex;
+}
+
+.footer-one-input1-hidden {
+  width: 90%;
+}
+
+.footer-one-input1-hidden input {
+  width: 100%;
+  padding: 8px;
+  margin: 10px;
+}
+
+.footer-one-input2-hidden {
+  width: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer-one-input2-hidden p {
+  background-color: rgb(16, 109, 170);
+  padding: 7px;
+  margin: 10px;
+  border: 1px solid rgba(94, 94, 94, 0.568);
+  border-left: none;
+  color: white;
+}
+
+/*Footer row two*/
+.footer-two {
+  background-color: rgb(199, 199, 199);
+  padding: 30px 0px 30px 0px;
+}
+
+.footer-two-container {
+  display: flex;
+  justify-content: space-between;
+  max-width: 1430px;
+  margin: auto;
+  font-weight: 300;
+  padding-bottom: 30px;
+  border-bottom: 1px solid rgba(112, 112, 112, 0.377);
+}
+
+.footer-two-title:hover,
+.footer-two-item:hover {
+  text-decoration: underline;
+  transition: 0.5s;
+}
+
+.footer-two-title {
+  font-weight: 400;
+  padding-bottom: 10px;
+}
+
+.footer-two-items {
+  list-style-type: none;
+  line-height: 20px;
+  font-size: 14px;
+}
+
+.footer-two-section {
+  width: 20%;
+}
+
+.footer-two-section1 {
+  padding-left: 10px;
+}
+
+/*Footer row two MOBILE*/
+.footer-two-mobile {
+  background-color: rgb(199, 199, 199);
+  display: none;
+}
+
+.footer-two-mobile-row {
+  max-width: 600px;
+  border-bottom: 1px solid rgba(112, 112, 112, 0.377);
+  margin: 0px 10px 0px 10px;
+}
+
+.footer-two-mobile-nonexpand {
+  display: flex;
+  padding: 10px 0px 10px 0px;
+}
+
+.footer-two-mobile-title {
+  width: 50%;
+  font-size: 25px;
+}
+
+.footer-two-mobile-icon {
+  width: 50%;
+  display: flex;
+  justify-content: flex-end;
+  font-size: 35px;
+  color: rgb(16, 109, 170);
+}
+
+.plus-icon {
+}
+
+.minus-icon {
+}
+
+.plus-icon0 {
+  display: block;
+}
+.plus-icon1 {
+  display: block;
+}
+.plus-icon2 {
+  display: block;
+}
+.plus-icon3 {
+  display: block;
+}
+.plus-icon4 {
+  display: block;
+}
+.plus-icon5 {
+  display: block;
+}
+
+.minus-icon0 {
+  display: none;
+}
+.minus-icon1 {
+  display: none;
+}
+.minus-icon2 {
+  display: none;
+}
+.minus-icon3 {
+  display: none;
+}
+.minus-icon4 {
+  display: none;
+}
+.minus-icon5 {
+  display: none;
+}
+
+.footer-two-mobile-drop {
+  padding-bottom: 10px;
+}
+
+.footer-two-mobile-drop0 {
+  display: none;
+}
+.footer-two-mobile-drop1 {
+  display: none;
+}
+.footer-two-mobile-drop2 {
+  display: none;
+}
+.footer-two-mobile-drop3 {
+  display: none;
+}
+.footer-two-mobile-drop4 {
+  display: none;
+}
+.footer-two-mobile-drop5 {
+  display: none;
+}
+
+.footer-two-mobile-item {
+  padding: 5px 5px 5px 0px;
+  font-size: 15px;
+}
+
+.footer-two-mobile-item:hover {
+  text-decoration: underline;
+}
+
+/*Footer row three*/
+.footer-three {
+  background-color: rgb(199, 199, 199);
+}
+
+.footer-three-container {
+  max-width: 1430px;
+  margin: auto;
+  font-size: 14px;
+  padding-bottom: 60px;
+}
+
+.footer-three-items {
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  justify-content: space-evenly;
+  padding-bottom: 30px;
+}
+
+.footer-three-item:hover {
+  text-decoration: underline;
+  transition: 0.5s;
+}
+
+.footer-three-text {
+  text-align: center;
+}
+@media only screen and (max-width: 600px) {
+
+.main-container {
+    flex-direction: column;
+}
+
+/*first and second columns of main*/
+.main-firstHalf {
+    width: 92%;
+    margin:auto;
+}
+
+.main-secondHalf {
+    width: 92%;
+    margin: auto;
+}
+
+/*nav bar (1st row, while supplies last...)*/
+.nav1-container {
+    display:none;
+}
+
+/*nav LOGO, SEARCH BAR, SIGN IN, etc (second row)*/
+.nav-2ndRow-container {
+    display:none; 
+}
+
+/*HIDDEN nav LOGO, SEARCH BAR, SIGN IN, etc (second row)*/
+.nav-2ndRow-container-hidden {
+    display:block;
+}
+
+/*Navbar blue, shop all departments...*/
+.navbar-blue-container {
+    display:none;
+}
+
+/*Welcome to the costco employee website*/
+.welcome-chris {
+    flex-direction: column;
+    font-size: 35px;
+}
+
+/*pay card & historical ePayroll*/
+.payCard-container {
+    flex-direction: column;
+}
+
+.payCard-1 {
+    width: 100%;
+    margin: auto;
+    margin-bottom: 10px;
+}
+
+.payCard-2 {
+    width: 100%;
+    margin: auto;
+}
+
+/*employee job bank & journeys*/
+.jobBank-journeys-container {
+    flex-direction: column;
+}
+
+.jobBank-container {
+    width: 100%;
+    margin: auto;
+    margin-bottom: 10px;
+}
+
+.journeys-container {
+    width: 100%;
+    margin: auto;
+}
+
+/*costco today*/
+.costcoToday-info {
+    flex-direction: column;
+}
+
+.costcoToday-info div{
+    width: 100%;
+}
+
+/*Footer row one*/
+.footer-one {
+    display:none;
+}
+
+/*Footer row one HIDDEN*/
+.footer-one-hidden {
+    display: block;
+}
+
+/*Footer row two MOBILE*/
+.footer-two {
+    display:none;
+}
+
+.footer-two-mobile {
+    display:block;
+}
+
+/*Footer row three*/
+.footer-three-container {
+    padding-top: 30px;
+}
+
+.footer-three-items {
+    line-height: 25px;
+}
+
+.footer-three-item {
+    margin-right: 6px;
+}
+
+.footer-three-text {
+    font-size: 12px;
+}
+
+}

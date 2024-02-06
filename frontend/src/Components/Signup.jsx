@@ -38,30 +38,41 @@ function Signup() {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.post(
-        "https://lazy-puce-horse-belt.cyclic.app/user/register",
-        {
-          name,
-          email,
-          password,
-        },
-        {
-          withCredentials: true,
-        }
-      );
-      console.log(password, confirmPassword);
-      if (password === confirmPassword && response.status === 201) {
+      if (password !== confirmPassword) {
         setLoading(false);
         toast({
-          title: "Success",
-          description: "Account created successfully",
-          status: "success",
+          title: "Error",
+          description: "Passwords do not match",
+          status: "error",
           duration: 5000,
           isClosable: true,
         });
-        navigate("/login");
       }
-      console.log(response);
+      else{
+        const response = await axios.post(
+          "https://lazy-puce-horse-belt.cyclic.app/user/register",
+          {
+            name,
+            email,
+            password,
+          },
+          {
+            withCredentials: true,
+          }
+        );
+        console.log(password, confirmPassword);
+        if (password === confirmPassword && response.status === 201) {
+          setLoading(false);
+          toast({
+            title: "Success",
+            description: "Account created successfully",
+            status: "success",
+            duration: 5000,
+            isClosable: true,
+          });
+          navigate("/login");
+        }
+      }
     } catch (error) {
       setLoading(false);
       toast({
