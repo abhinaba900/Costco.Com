@@ -97,7 +97,7 @@ function Header() {
       async function fetchData() {
         try {
           const response = await axios.get(
-            "https://lazy-puce-horse-belt.cyclic.app/products?search=" +
+            "https://costcocombackend-production.up.railway.app/products?search=" +
               debouncedSearchTerm
           );
           console.log(response.data.length);
