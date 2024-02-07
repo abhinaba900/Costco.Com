@@ -15,14 +15,22 @@ function Home() {
     async function fetchData() {
       try {
         const response = await axios.get(
-          "https://lazy-puce-horse-belt.cyclic.app/",
+          "https://costcocombackend-production.up.railway.app/",
           {
             withCredentials: true,
-            credentials: "include",
           }
         );
+        if (response.status === 200) {
+         localStorage.setItem("loggedInUser", true);
+        }
+        else {
+          localStorage.setItem("loggedInUser", false);
+        }
         console.log(response);
-      } catch (error) {}
+      } catch (error) {
+        localStorage.setItem("loggedInUser", false);
+        console.log(error);
+      }
     }
     fetchData();
   }, []);

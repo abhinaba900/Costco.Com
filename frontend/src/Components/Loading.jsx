@@ -1,16 +1,18 @@
 import React from "react";
-import { Spinner, Box } from "@chakra-ui/react";
+import styles from"./Loading.module.css";
 function Loading() {
   return (
-    <Box display={"flex"} justifyContent={"center"}>
-      <Spinner
-        thickness="4px"
-        speed="0.65s"
-        emptyColor="gray.200"
-        color="blue.500"
-        size="xl"
-      />
-    </Box>
+    <div className={styles.hourglassBackground}>
+      <div className={styles.hourglassContainer}>
+        <div className={styles.hourglassCurves}></div>
+        <div className={styles.hourglassCapTop}></div>
+        <div className={styles.hourglassGlassTop}></div>
+        <div className={styles.hourglassSand}></div>
+        <div className={styles.hourglassSandStream}></div>
+        <div className={styles.hourglassCapBottom}></div>
+        <div className={styles.hourglassGlass}></div>
+      </div>
+    </div>
   );
 }
 

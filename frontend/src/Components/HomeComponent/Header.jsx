@@ -22,6 +22,7 @@ import axios from "axios";
 import { ChevronDownIcon, SearchIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
+import UserMenu from "./UserMenu";
 
 function Header() {
   const navigate = useNavigate();
@@ -69,6 +70,12 @@ function Header() {
     }, 500);
   };
 
+  const [login, setLogin] = useState(localStorage.getItem("loggedInUser"));
+
+  useEffect(() => {
+    setLogin(localStorage.getItem("loggedInUser"));
+    console.log(localStorage.getItem("loggedInUser"));
+  }, [localStorage.getItem("loggedInUser")]);
   function useDebounce(value, delay) {
     // State and setters for debounced value
     const [debouncedValue, setDebouncedValue] = useState(value);
@@ -222,18 +229,22 @@ function Header() {
 
         <GridItem colSpan={1}>
           <Flex justifyContent="flex-end" alignItems="center">
-            <Text
-              cursor={"pointer"}
-              _hover={{ borderBottom: "2px solid #0060A9" }}
-              color={"#0060A9"}
-              onClick={() => navigate("/login")}
-              p={"0"}
-              marginBlockStart={0}
-              marginBlockEnd={0}
-              fontWeight={"semibold"}
-            >
-              Sign In / Register
-            </Text>
+            {login ? (
+              <UserMenu />
+            ) : (
+              <Text
+                cursor={"pointer"}
+                _hover={{ borderBottom: "2px solid #0060A9" }}
+                color={"#0060A9"}
+                onClick={() => navigate("/login")}
+                p={"0"}
+                marginBlockStart={0}
+                marginBlockEnd={0}
+                fontWeight={"semibold"}
+              >
+                Sign In / Register
+              </Text>
+            )}
             <Button
               p={"1.2em"}
               variant={"solid"}

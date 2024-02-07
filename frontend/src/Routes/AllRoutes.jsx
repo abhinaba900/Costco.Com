@@ -19,6 +19,7 @@ function AllRoutes() {
         <Route path="*" element={<Error />} />
         <Route path="/products" element={<Products />} />
         <Route path="/products/:_id" element={<SingleProductData />} />
+        <Route path="/loading" element={<Loading />} />
       </Routes>
     </div>
   );
