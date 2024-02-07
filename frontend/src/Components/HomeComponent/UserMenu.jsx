@@ -15,15 +15,10 @@ function UserMenu() {
         }
       );
       if (response.status === 200) {
-        localStorage.setItem("loggedInUser", false);
-        setLogin(!login);
-        document.cookie =
-          "authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-        document.cookie =
-          "refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-        window.scrollTo(0, 0);
+        setLogin(false);
+        console.log("logout successful");
       } else {
-        throw new Error("Failed to logout");
+        console.log("logout failed");
       }
     } catch (error) {
       console.log(error);

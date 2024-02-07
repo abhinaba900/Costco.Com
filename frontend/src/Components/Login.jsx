@@ -50,21 +50,30 @@ function Login() {
           withCredentials: true,
         }
       );
-      console.log(response);
       if (response.status === 200) {
+        setLogin(true);
         setLoading(false);
         navigate("/");
-        localStorage.setItem("loggedInUser", true);
-        setLogin(true);
         toast({
-          title: "Logged in successfully.",
-          description: "Welcome back! Happy shopping!",
+          title: "Login Successful",
           status: "success",
+          duration: 5000,
+          isClosable: true,
+        })
+
+        
+      }
+      else{
+        setLoading(false);
+        toast({
+          title: "Account not found.",
+          description: `${response.data.message}`,
+          status: "error",
           duration: 5000,
           isClosable: true,
         });
       }
-      console.log(response);
+     
     } catch (error) {
       setLoading(false);
       console.log(error);
@@ -75,7 +84,6 @@ function Login() {
         duration: 5000,
         isClosable: true,
       });
-      localStorage.setItem("loggedInUser", false);
     }
   };
   if (login) {
