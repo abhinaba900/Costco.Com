@@ -1,19 +1,8 @@
-import {
-  Image,
-  Stack,
-  Heading,
-  Text,
-  Divider,
-  ButtonGroup,
-  Button,
-  Box,
-} from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import { Image, Stack, Heading, Text, Button, Box } from "@chakra-ui/react";
 import "./Sass/ProductsCard.css";
-import { Card, CardHeader, CardBody, CardFooter } from "@chakra-ui/react";
-import { FaHeart } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { MdOutlineDetails } from "react-icons/md";
+import AddToCartButton from "./AddToCartButton";
 function ProductsCard({ data }) {
   const navigate = useNavigate();
   return (
@@ -42,9 +31,7 @@ function ProductsCard({ data }) {
         <Text fontSize="lg" fontWeight="bold">
           ${(data.price / 100).toFixed(2)}
         </Text>
-        <Button leftIcon={<FaHeart />} variant="outline" colorScheme="pink">
-          Wishlist
-        </Button>
+        <AddToCartButton id={data.id} />
         <Button
           leftIcon={<MdOutlineDetails />}
           variant="outline"

@@ -15,27 +15,30 @@ import {
   MenuItem,
   Grid,
   GridItem,
-  IconButton,
 } from "@chakra-ui/react";
+import { ChevronDownIcon, SearchIcon } from "@chakra-ui/icons";
+import { FaShoppingCart } from "react-icons/fa";
 import Shope from "./Shope";
 import axios from "axios";
-import { ChevronDownIcon, SearchIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
-import { FaShoppingCart } from "react-icons/fa";
 import UserMenu from "./UserMenu";
+import { AuthContext } from "../AuthContextProvider";
 
 function Header() {
   const navigate = useNavigate();
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const [isGroceryOpen, setIsGroceryOpen] = React.useState(false);
+  const { login, setLogin } = React.useContext(AuthContext);
+  const [logined, setLogined] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isGroceryOpen, setIsGroceryOpen] = useState(false);
+  const [mobileView, setMobileView] = useState(false);
+  const [search, setSearch] = useState("");
+
   const bg = useColorModeValue("#EEEEEE", "gray.800");
   const color = useColorModeValue("#0060A9", "#0060A9");
   const borderColor = useColorModeValue("gray.200", "gray.700");
-  const closeTimeoutId = React.useRef();
-  const [mobileView, setMobileView] = React.useState(false);
-  const [Search, setSearch] = React.useState("");
+  const closeTimeoutId = useRef();
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleResize = () => {
       setMobileView(window.innerWidth < 768);
     };
@@ -45,11 +48,37 @@ function Header() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-  console.log(Search);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        let response = await axios.get(
+          "https://costcocombackend-production.up.railway.app/",
+          {
+            withCredentials: true,
+          }
+        );
+        if (response.status === 200) {
+          localStorage.setItem("loggedInUser", true);
+          const data = localStorage.getItem("loggedInUser");
+          console.log(response.data);
+          setLogin(true);
+          setLogined(data);
+        } else {
+          localStorage.setItem("loggedInUser", false);
+          setLogin(false);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchData();
+  }, [login]);
+
   const handleSearch = () => {};
 
   const openMenu = () => {
-    clearTimeout(closeTimeoutId.current); // Clear any pending timeout to close the menu
+    clearTimeout(closeTimeoutId.current);
     setIsMenuOpen(true);
   };
 
@@ -60,7 +89,7 @@ function Header() {
   };
 
   const openGrocery = () => {
-    clearTimeout(closeTimeoutId.current); // Clear any pending timeout to close the menu
+    clearTimeout(closeTimeoutId.current);
     setIsGroceryOpen(true);
   };
 
@@ -70,44 +99,16 @@ function Header() {
     }, 500);
   };
 
-  const [login, setLogin] = useState(localStorage.getItem("loggedInUser"));
-
-  useEffect(() => {
-    setLogin(localStorage.getItem("loggedInUser"));
-    console.log(localStorage.getItem("loggedInUser"));
-  }, [localStorage.getItem("loggedInUser")]);
-  function useDebounce(value, delay) {
-    // State and setters for debounced value
-    const [debouncedValue, setDebouncedValue] = useState(value);
-
-    useEffect(() => {
-      // Set debouncedValue to value (passed in) after the specified delay
-      const handler = setTimeout(() => {
-        setDebouncedValue(value);
-      }, delay);
-
-      // Cleanup function to cancel the timeout if value or delay changes
-      return () => {
-        clearTimeout(handler);
-      };
-    }, [value, delay]); // Only re-call effect if value or delay changes
-
-    return debouncedValue;
-  }
-
-  const debouncedSearchTerm = useDebounce(Search, 500);
+  const debouncedSearchTerm = useDebounce(search, 500);
 
   useEffect(() => {
     if (debouncedSearchTerm) {
-      // Call your API or perform the action with the debounced term
-      console.log("Performing API call with:", debouncedSearchTerm);
       async function fetchData() {
         try {
           const response = await axios.get(
             "https://costcocombackend-production.up.railway.app/products?search=" +
               debouncedSearchTerm
           );
-          console.log(response.data.length);
           if (response.data.length === 0) {
             navigate("/error");
           } else {
@@ -117,7 +118,6 @@ function Header() {
           navigate("/error");
         }
       }
-
       fetchData();
     }
   }, [debouncedSearchTerm]);
@@ -130,6 +130,7 @@ function Header() {
       overflowX={"hidden"}
       fontFamily={"poppins"}
     >
+      {/* Header Top */}
       <Flex
         py={2}
         borderColor={borderColor}
@@ -137,62 +138,10 @@ function Header() {
         alignItems={{ base: "center", md: "flex-start" }}
         justifyContent={{ base: "center", md: "flex-end" }}
       >
-        <Text mx={"1em"} color={color}>
-          Costco Next
-        </Text>
-        <Text mx={"1em"} color={color}>
-          While Supplies Last
-        </Text>
-        <Text mx={"1em"} color={color}>
-          Online-Only
-        </Text>
-        <Text mx={"1em"} color={color}>
-          Treasure Hunt
-        </Text>
-        <Text mx={"1em"} color={color}>
-          What's New
-        </Text>
-        <Text mx={"1em"} color={color}>
-          New Lower Prices
-        </Text>
-        <Text mx={"1em"} color={color}>
-          Get Email Offers
-        </Text>
-        <Text mx={"1em"} color={color}>
-          Customer Service
-        </Text>
-        {/* Chakra UI Menu for Dropdown */}
-        <Menu isOpen={isMenuOpen}>
-          <MenuButton
-            rightIcon={<ChevronDownIcon />}
-            onClick={() => (isMenuOpen ? closeMenu() : openMenu())}
-            mx={0}
-            color={color}
-            background="none"
-            _hover={{ background: "none", textDecoration: "underline" }}
-            _focus={{ outline: "none" }}
-            onMouseEnter={() => openMenu()} // Open menu on hover
-            onMouseLeave={() => closeMenu()} // Close menu on mouse leave
-          >
-            Us <ChevronDownIcon />
-          </MenuButton>
-          <MenuList
-            onMouseEnter={() => openMenu()} // Keep menu open when hovering over the list
-            onMouseLeave={() => closeMenu()}
-          >
-            <MenuItem fontStyle={"bold"}>Select country/region:</MenuItem>
-            <MenuItem fontStyle={"bold"}>United States</MenuItem>
-            <MenuItem fontStyle={"bold"}>Canada</MenuItem>
-            <MenuItem fontStyle={"bold"}>United Kingdom</MenuItem>
-            <MenuItem fontStyle={"bold"}>Mexico</MenuItem>
-            <MenuItem fontStyle={"bold"}>South Korea</MenuItem>
-            <MenuItem fontStyle={"bold"}>Taiwan</MenuItem>
-            <MenuItem fontStyle={"bold"}>Japan</MenuItem>
-            <MenuItem fontStyle={"bold"}>Australia</MenuItem>
-            <MenuItem fontStyle={"bold"}>Iceland</MenuItem>
-          </MenuList>
-        </Menu>
+        {/* Header Top Content */}
       </Flex>
+
+      {/* Header Middle */}
       <Grid
         templateColumns={{ base: "1fr", md: "1fr 1fr 1fr" }}
         gap={6}
@@ -202,6 +151,7 @@ function Header() {
         p={"1em"}
         borderBottom={"1px solid #E5E5E5"}
       >
+        {/* Logo */}
         <GridItem colSpan={1}>
           <Box>
             <Image
@@ -213,23 +163,25 @@ function Header() {
           </Box>
         </GridItem>
 
+        {/* Search Input */}
         <GridItem colSpan={1}>
           <InputGroup>
-            <InputRightElement
-              children={<SearchIcon cursor={"pointer"} color="gray.300" />}
-            />
+            <InputRightElement cursor="pointer" color="gray.300">
+              <SearchIcon />
+            </InputRightElement>
             <Input
-              p={"1.5em"}
-              type="tel"
+              p="1.5em"
+              type="text"
               placeholder="Search"
               onChange={(e) => setSearch(e.target.value)}
             />
           </InputGroup>
         </GridItem>
 
+        {/* User Actions */}
         <GridItem colSpan={1}>
           <Flex justifyContent="flex-end" alignItems="center">
-            {login ? (
+            {logined ? (
               <UserMenu />
             ) : (
               <Text
@@ -270,6 +222,8 @@ function Header() {
           </Flex>
         </GridItem>
       </Grid>
+
+      {/* Header Bottom */}
       <Flex
         py={2}
         borderColor={borderColor}
@@ -279,133 +233,26 @@ function Header() {
         alignItems={{ base: "center", md: "flex-start" }}
         textAlign={{ base: "center", md: "left" }}
       >
-        <Shope />
-        <Menu isOpen={isGroceryOpen}>
-          <MenuButton
-            rightIcon={<ChevronDownIcon />}
-            mx={0}
-            color={"white"}
-            background="none"
-            _hover={{ background: "none", textDecoration: "underline" }}
-            _focus={{ outline: "none" }}
-            onMouseEnter={() => openGrocery()} // Open menu on hover
-            onMouseLeave={() => closeGrocery()} // Close menu on mouse leave
-          >
-            Grocery <ChevronDownIcon />
-          </MenuButton>
-          <MenuList
-            onMouseEnter={() => openGrocery()} // Keep menu open when hovering over the list
-            onMouseLeave={() => closeGrocery()}
-          >
-            <MenuItem fontStyle={"bold"}>Grocery & Household</MenuItem>
-            <MenuItem color={"#005DAB"} fontStyle={"bold"}>
-              Gift Baskets
-            </MenuItem>
-            <MenuItem color={"#005DAB"} fontStyle={"bold"}>
-              Organic
-            </MenuItem>
-            <MenuItem color={"#005DAB"} fontStyle={"bold"}>
-              Kirkland Signature Grocery
-            </MenuItem>
-            <MenuItem color={"#005DAB"} fontStyle={"bold"}>
-              Gourmet Foods
-            </MenuItem>
-            <MenuItem color={"#005DAB"} fontStyle={"bold"}>
-              Meat
-            </MenuItem>
-            <MenuItem color={"#005DAB"} fontStyle={"bold"}>
-              Poultry
-            </MenuItem>
-            <MenuItem color={"#005DAB"} fontStyle={"bold"}>
-              Seafood
-            </MenuItem>
-            <MenuItem color={"#005DAB"} fontStyle={"bold"}>
-              Deli
-            </MenuItem>
-            <MenuItem color={"#005DAB"} fontStyle={"bold"}>
-              Cheese & Dairy
-            </MenuItem>
-            <MenuItem color={"#005DAB"} fontStyle={"bold"}>
-              Bakery & Desserts
-            </MenuItem>
-            <MenuItem color={"#005DAB"} fontStyle={"bold"}>
-              Snacks
-            </MenuItem>
-            <MenuItem color={"#005DAB"} fontStyle={"bold"}>
-              Candy
-            </MenuItem>
-            <MenuItem color={"#005DAB"} fontStyle={"bold"}>
-              Pantry & Dry Goods
-            </MenuItem>
-            <MenuItem color={"#005DAB"} fontStyle={"bold"}>
-              Breakfast
-            </MenuItem>
-            <MenuItem color={"#005DAB"} fontStyle={"bold"}>
-              Beverages & Water
-            </MenuItem>
-            <MenuItem color={"#005DAB"} fontStyle={"bold"}>
-              Coffee & Sweeteners
-            </MenuItem>
-            <MenuItem color={"#005DAB"} fontStyle={"bold"}>
-              Health & Personal Care
-            </MenuItem>
-            <MenuItem color={"#005DAB"} fontStyle={"bold"}>
-              Paper & Plastic Products
-            </MenuItem>
-            <MenuItem color={"#005DAB"} fontStyle={"bold"}>
-              Laundry Detergent & Supplies
-            </MenuItem>
-            <MenuItem color={"#005DAB"} fontStyle={"bold"}>
-              Cleaning Supplies
-            </MenuItem>
-            <MenuItem color={"#005DAB"} fontStyle={"bold"}>
-              Pet Supplies
-            </MenuItem>
-            <MenuItem color={"#005DAB"} fontStyle={"bold"}>
-              Floral
-            </MenuItem>
-            <MenuItem color={"#005DAB"} fontStyle={"bold"}>
-              Household
-            </MenuItem>
-            <MenuItem color={"#005DAB"} fontStyle={"bold"}>
-              Emergency Kits & Supplies
-            </MenuItem>
-          </MenuList>
-        </Menu>
-        <Text mx={"1em"} color={"white"}>
-          Same-Day
-        </Text>
-        <Text mx={"1em"} color={"white"}>
-          Deals
-        </Text>
-        <Text mx={"1em"} color={"white"}>
-          Business Delivery
-        </Text>
-        <Text mx={"1em"} color={"white"}>
-          Optical
-        </Text>
-        <Text mx={"1em"} color={"white"}>
-          Pharmacy
-        </Text>
-        <Text mx={"1em"} color={"white"}>
-          Services
-        </Text>
-
-        <Text mx={"1em"} color={"white"}>
-          Photo
-        </Text>
-        <Text mx={"1em"} color={"white"}>
-          Travel
-        </Text>
-        <Text mx={"1em"} color={"white"}>
-          Membership
-        </Text>
-        <Text mx={"1em"} color={"white"}>
-          Locations
-        </Text>
+        {/* Menu Items */}
       </Flex>
     </Box>
   );
+}
+
+function useDebounce(value, delay) {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [value, delay]);
+
+  return debouncedValue;
 }
 
 export default Header;

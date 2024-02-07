@@ -17,6 +17,8 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Loading from "./Loading";
+import { AuthContext } from "./AuthContextProvider";
+import { Navigate } from "react-router-dom";
 function Login() {
   const navigate = useNavigate();
   const [show, setShow] = React.useState(false);
@@ -25,6 +27,7 @@ function Login() {
   const toast = useToast();
   const handleClick = () => setShow(!show);
   const [loading, setLoading] = React.useState(false);
+  const { login, setLogin } = React.useContext(AuthContext);
   const handleChange = (e) => {
     if (e.target.name === "email") {
       setEmail(e.target.value);
@@ -51,6 +54,8 @@ function Login() {
       if (response.status === 200) {
         setLoading(false);
         navigate("/");
+        localStorage.setItem("loggedInUser", true);
+        setLogin(true);
         toast({
           title: "Logged in successfully.",
           description: "Welcome back! Happy shopping!",
@@ -70,8 +75,12 @@ function Login() {
         duration: 5000,
         isClosable: true,
       });
+      localStorage.setItem("loggedInUser", false);
     }
   };
+  if (login) {
+    return <Navigate to="/" />;
+  }
   return (
     <Box fontFamily={"poppins"}>
       <Box background={"#ECECEC"} p={"2em"}>

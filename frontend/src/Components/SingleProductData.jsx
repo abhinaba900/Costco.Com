@@ -18,6 +18,8 @@ import Footer from "./HomeComponent/Footer";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import Loading from "./Loading";
+import AddToCartButton from "./HomeComponent/AddToCartButton";
+import BuyNowButton from "./HomeComponent/BuyNowButton";
 
 function SingleProductData() {
   const { _id } = useParams();
@@ -48,12 +50,18 @@ function SingleProductData() {
   }, [_id]);
 
   if (loading) {
-    return<Loading/>
+    return <Loading />;
   }
   return (
     <Box>
       <Header />
-      <Card p={"1em"} maxW="50%" mx={"auto"} mt={"1em"} mb={"1em"}>
+      <Card
+        p={"1em"}
+        maxW={{ base: "90%", md: "80%", lg: "50%" }}
+        mx={"auto"}
+        mt={"1em"}
+        mb={"1em"}
+      >
         <CardBody>
           <Image
             display={"block"}
@@ -84,12 +92,8 @@ function SingleProductData() {
         <Divider />
         <CardFooter>
           <ButtonGroup spacing="2">
-            <Button variant="solid" colorScheme="blue" size="lg">
-              Buy now
-            </Button>
-            <Button variant="ghost" colorScheme="blue" size="lg">
-              Add to cart
-            </Button>
+            <BuyNowButton />
+            <AddToCartButton />
           </ButtonGroup>
         </CardFooter>
       </Card>
