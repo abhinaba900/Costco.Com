@@ -17,10 +17,12 @@ import Header from "./HomeComponent/Header";
 import Footer from "./HomeComponent/Footer";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import Loading from "./Loading";
 
 function SingleProductData() {
   const { _id } = useParams();
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchData() {
@@ -32,15 +34,22 @@ function SingleProductData() {
         console.log("Response:", response);
         if (response.status === 200) {
           setData(response.data);
+          setLoading(false);
         } else {
           console.error("Fetch error:", response);
+          setLoading(false);
         }
       } catch (error) {
         console.error("Fetch error:", error);
+        setLoading(false);
       }
     }
     fetchData();
   }, [_id]);
+
+  if (loading) {
+    return<Loading/>
+  }
   return (
     <Box>
       <Header />

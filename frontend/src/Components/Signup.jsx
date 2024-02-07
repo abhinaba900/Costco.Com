@@ -49,7 +49,7 @@ function Signup() {
         });
       } else {
         const response = await axios.post(
-          "https://lazy-puce-horse-belt.cyclic.app/user/register",
+          "https://costcocombackend-production.up.railway.app/user/register",
           {
             name,
             email,

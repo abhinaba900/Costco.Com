@@ -14,12 +14,13 @@ import Header from "./Header";
 import Footer from "./Footer";
 import ProductsCard from "./ProductsCard";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
+import Loading from "../Loading";
 
 function Products() {
   const { Products, setProducts } = useContext(AuthContext); // Assuming products is correctly named here
   const [numbers, setNumber] = useState(10);
   const [error, setError] = useState(""); // Added for error handling
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     async function fetchData() {
       try {
@@ -31,18 +32,26 @@ function Products() {
         const allProducts = response?.data; // Adjusted to access allProducts key
         if (allProducts) {
           setProducts(allProducts);
+          setLoading(false);
         } else {
           throw new Error("allProducts key not found");
+          setLoading(false);
         }
       } catch (error) {
         console.error(error);
         setError("Failed to load products"); // Update error state
+        setLoading(false);
       }
     }
     fetchData();
   }, [setProducts]); // Added setProducts as a dependency
 
   const currentSlideProducts = Products.slice(0, numbers);
+
+
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <Box>
       <Header />

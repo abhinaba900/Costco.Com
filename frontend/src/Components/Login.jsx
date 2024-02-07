@@ -38,7 +38,7 @@ function Login() {
     try {
       setLoading(true);
       const response = await axios.post(
-        "https://lazy-puce-horse-belt.cyclic.app/user/login",
+        "https://costcocombackend-production.up.railway.app/user/login",
         {
           email,
           password,
