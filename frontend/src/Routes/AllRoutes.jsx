@@ -10,6 +10,7 @@ import Products from "../Components/HomeComponent/Products";
 import SingleProductData from "../Components/SingleProductData";
 import CartPadge from "../Components/CartPadge";
 import CheckoutPage from "../Components/CheckoutPadge";
+import OrderSuccessful from "../Components/OrderSecessfull";
 function AllRoutes() {
   return (
     <div>
@@ -24,6 +25,7 @@ function AllRoutes() {
         <Route path="/loading" element={<Loading />} />
         <Route path="/cart" element={<CartPadge />} />
         <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/ordersuccessfull" element={<OrderSuccessful />} />
       </Routes>
     </div>
   );

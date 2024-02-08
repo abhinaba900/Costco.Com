@@ -1,12 +1,20 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./CheckoutPadge.css";
-import { useNavigate } from "react-router-dom";
-
+import { useNavigate, Navigate } from "react-router-dom";
+import { AuthContext } from "./AuthContextProvider";
+import Loading from "./Loading";
 function CheckoutPage() {
-  // Example useState usage
-  // const [name, setName] = useState('');
+  const { login } = React.useContext(AuthContext);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
+  if (!login) {
+    return <Navigate to="/login" />;
+  }
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="container" style={{ marginTop: "50px" }}>
@@ -28,7 +36,16 @@ function CheckoutPage() {
                         Sed ut perspiciatis unde omnis iste
                       </p>
                       <div className="mb-3">
-                        <form>
+                        <form
+                          onSubmit={(e) => {
+                            e.preventDefault();
+                            setLoading(true);
+                            setTimeout(() => {
+                              setLoading(false);
+                              navigate("/ordersuccessfull");
+                            }, 3000);
+                          }}
+                        >
                           <div>
                             <div className="row">
                               <div className="col-lg-4">
@@ -44,6 +61,7 @@ function CheckoutPage() {
                                     className="form-control"
                                     id="billing-name"
                                     placeholder="Enter name"
+                                    required
                                   />
                                 </div>
                               </div>
@@ -60,6 +78,7 @@ function CheckoutPage() {
                                     className="form-control"
                                     id="billing-email-address"
                                     placeholder="Enter email"
+                                    required
                                   />
                                 </div>
                               </div>
@@ -76,6 +95,7 @@ function CheckoutPage() {
                                     className="form-control"
                                     id="billing-phone"
                                     placeholder="Enter Phone no."
+                                    required
                                   />
                                 </div>
                               </div>
@@ -103,6 +123,7 @@ function CheckoutPage() {
                                   <select
                                     className="form-control form-select"
                                     title="Country"
+                                    required
                                   >
                                     <option value="0">Select Country</option>
                                     <option value="AF">Afghanistan</option>
@@ -130,6 +151,7 @@ function CheckoutPage() {
                                     className="form-control"
                                     id="billing-city"
                                     placeholder="Enter City"
+                                    required
                                   />
                                 </div>
                               </div>
@@ -147,8 +169,20 @@ function CheckoutPage() {
                                     className="form-control"
                                     id="zip-code"
                                     placeholder="Enter Postal code"
+                                    required
                                   />
                                 </div>
+                              </div>
+                            </div>
+                            <div className="col" style={{ marginTop: "20px" }}>
+                              <div className="text-end mt-2 mt-sm-0">
+                                <button
+                                  type="submit"
+                                  className="btn btn-success"
+                                >
+                                  <i className="mdi mdi-cart-outline me-1"></i>{" "}
+                                  Proceed
+                                </button>
                               </div>
                             </div>
                           </div>
@@ -227,13 +261,6 @@ function CheckoutPage() {
               >
                 <i className="mdi mdi-arrow-left me-1"></i> Continue Shopping
               </a>
-            </div>
-            <div className="col">
-              <div className="text-end mt-2 mt-sm-0">
-                <a href="#" className="btn btn-success">
-                  <i className="mdi mdi-cart-outline me-1"></i> Proceed
-                </a>
-              </div>
             </div>
           </div>
         </div>
