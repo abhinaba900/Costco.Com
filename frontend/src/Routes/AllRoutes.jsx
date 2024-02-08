@@ -9,6 +9,7 @@ import ForgotPasswoard from "../Components/ForgotPasswoard";
 import Products from "../Components/HomeComponent/Products";
 import SingleProductData from "../Components/SingleProductData";
 import CartPadge from "../Components/CartPadge";
+import CheckoutPage from "../Components/CheckoutPadge";
 function AllRoutes() {
   return (
     <div>
@@ -21,7 +22,8 @@ function AllRoutes() {
         <Route path="/products" element={<Products />} />
         <Route path="/products/:_id" element={<SingleProductData />} />
         <Route path="/loading" element={<Loading />} />
-        <Route path="/checkout" element={<CartPadge />} />
+        <Route path="/cart" element={<CartPadge />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
       </Routes>
     </div>
   );

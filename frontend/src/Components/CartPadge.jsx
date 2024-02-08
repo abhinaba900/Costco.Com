@@ -215,6 +215,7 @@ function CartPage() {
                         <button
                           type="button"
                           className="btn btn-dark btn-block btn-lg"
+                          onClick={() => navigate("/checkout")}
                         >
                           Checkout
                         </button>

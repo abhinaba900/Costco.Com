@@ -266,7 +266,7 @@ function Header() {
               background={"none"}
               _hover={{ borderBottom: "2px solid #0060A9" }}
               ml={"1em"}
-              onClick={() => navigate("/checkout")}
+              onClick={() => navigate("/cart")}
             >
               <FaShoppingCart /> Cart
             </Button>
