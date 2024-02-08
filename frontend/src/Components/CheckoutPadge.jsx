@@ -1,10 +1,12 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./CheckoutPadge.css";
+import { useNavigate } from "react-router-dom";
 
 function CheckoutPage() {
   // Example useState usage
   // const [name, setName] = useState('');
+  const navigate = useNavigate();
 
   return (
     <div className="container" style={{ marginTop: "50px" }}>
@@ -220,8 +222,8 @@ function CheckoutPage() {
           <div className="row my-4">
             <div className="col">
               <a
-                href="ecommerce-products.html"
                 className="btn btn-link text-muted"
+                onClick={() => navigate("/products")}
               >
                 <i className="mdi mdi-arrow-left me-1"></i> Continue Shopping
               </a>
