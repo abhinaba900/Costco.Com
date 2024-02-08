@@ -22,14 +22,19 @@ function CartPage() {
           "https://costcocombackend-production.up.railway.app/cart"
         );
         const data = await response.json();
-        // Assuming each cart item's product data is directly in the item object
-        // and adjusting structure as needed
+
         let quantity = 0;
         data.forEach((item) => {
           quantity += item.products[0].quantity;
-        })
+        });
         console.log("Cart items:", data);
-        setItems(data.map((item) => ({ ...item.products[0], id: item.id }))); // Modify according to your actual data structure
+        setItems(
+          data.map((item) => ({
+            ...item.products[0],
+            id: item.id,
+            quantity: 1,
+          }))
+        );
       } catch (error) {
         console.error("Failed to fetch cart items:", error);
       }
@@ -56,8 +61,24 @@ function CartPage() {
     );
   };
 
-  const removeItem = (id) => {
-    setItems((currentItems) => currentItems.filter((item) => item.id !== id));
+  const removeItem = async (id) => {
+    try {
+      const response = await fetch(
+        `https://costcocombackend-production.up.railway.app/cart/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
+      if (response.ok) {
+        setItems((currentItems) =>
+          currentItems.filter((item) => item.id !== id)
+        );
+      } else {
+        console.error("Failed to remove item:", response);
+      }
+    } catch (error) {
+      console.log("Failed to remove item:", error);
+    }
   };
 
   const totalPrice = items.reduce(
