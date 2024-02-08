@@ -1,20 +1,18 @@
 import React from "react";
 import styles from "./Button.module.css";
 import axios from "axios";
-import { useParams } from "react-router-dom";
-import Loading from "../Loading";
 import { useToast } from "@chakra-ui/react";
+import AddToCartLoading from "../AddToCartLoading";
 
-function AddToCartButton() {
+function AddToCartButton({ id }) {
   const toast = useToast();
-  const { _id } = useParams();
   const [loading, setLoading] = React.useState(false);
+  console.log(id);
   const handleClick = async () => {
     try {
       setLoading(true);
-      console.log(_id);
       const response = await axios.post(
-        "https://costcocombackend-production.up.railway.app/cart/" + Number(_id)
+        "https://costcocombackend-production.up.railway.app/cart/" + id
       );
       console.log(response);
       if (response.status == 200) {
@@ -49,7 +47,7 @@ function AddToCartButton() {
   };
 
   if (loading) {
-    return <Loading />;
+    return <AddToCartLoading />;
   }
   return (
     <button className={styles.CartBtn} onClick={handleClick} disabled={loading}>

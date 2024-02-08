@@ -15,7 +15,6 @@ import {
   MenuItem,
   Grid,
   GridItem,
-  IconButton,
 } from "@chakra-ui/react";
 import Shope from "./Shope";
 import axios from "axios";
@@ -47,7 +46,6 @@ function Header() {
     };
   }, []);
   console.log(Search);
-  const handleSearch = () => {};
 
   const openMenu = () => {
     clearTimeout(closeTimeoutId.current); // Clear any pending timeout to close the menu
@@ -74,12 +72,9 @@ function Header() {
   const { login, setLogin } = React.useContext(AuthContext);
   const [logined, setLogined] = useState(login);
 
-
   useEffect(() => {
     setLogined(login);
   }, [login]);
-
- 
 
   // Effect for debouncing search input
 
@@ -271,6 +266,7 @@ function Header() {
               background={"none"}
               _hover={{ borderBottom: "2px solid #0060A9" }}
               ml={"1em"}
+              onClick={() => navigate("/checkout")}
             >
               <FaShoppingCart /> Cart
             </Button>
