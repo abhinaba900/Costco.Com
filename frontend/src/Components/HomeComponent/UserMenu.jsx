@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Menu, MenuButton, MenuList, MenuItem, Button } from "@chakra-ui/react";
 import axios from "axios";
 import { FaUserAlt } from "react-icons/fa";
@@ -6,24 +6,26 @@ import styles from "./LogoutButton.module.css";
 import { AuthContext } from "../../Components/AuthContextProvider";
 function UserMenu() {
   const { login, setLogin } = React.useContext(AuthContext);
-  const handaleLogout = async () => {
-    try {
-      const response = await axios.get(
-        "https://costcocombackend-production.up.railway.app/user/logout",
-        {
-          withCredentials: true,
+  
+  const  handaleLogout = async () => {
+      try {
+        const response = await axios.get(
+          "https://costcocombackend-production.up.railway.app/user/logout",
+          {
+            withCredentials: true,
+          }
+        );
+        if (response.status === 200) {
+          setLogin(false);
+          console.log("logout successful");
+        } else {
+          console.log("logout failed");
         }
-      );
-      if (response.status === 200) {
-        setLogin(false);
-        console.log("logout successful");
-      } else {
-        console.log("logout failed");
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    };
+ 
 
   return (
     <Menu>

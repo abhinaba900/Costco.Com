@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { IoMdEyeOff } from "react-icons/io";
 import { IoEye } from "react-icons/io5";
 import { useToast } from "@chakra-ui/react";
@@ -51,19 +51,17 @@ function Login() {
         }
       );
       if (response.status === 200) {
-        setLogin(true);
         setLoading(false);
-        navigate("/");
+
+        setLogin(true);
         toast({
           title: "Login Successful",
           status: "success",
           duration: 5000,
           isClosable: true,
-        })
-
-        
-      }
-      else{
+        });
+        navigate("/");
+      } else {
         setLoading(false);
         toast({
           title: "Account not found.",
@@ -73,7 +71,6 @@ function Login() {
           isClosable: true,
         });
       }
-     
     } catch (error) {
       setLoading(false);
       console.log(error);
@@ -86,6 +83,7 @@ function Login() {
       });
     }
   };
+
   if (login) {
     return <Navigate to="/" />;
   }
@@ -108,7 +106,7 @@ function Login() {
         my={"2.5em"}
         p={"1em"}
       >
-        <Heading className="poppins-black" fontSize={"2.25em"}>
+        <Heading className="poppins-black" fontSize={"2.25em"} mb={"2em"}>
           Sign In
         </Heading>
         {loading ? (

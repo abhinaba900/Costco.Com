@@ -4,11 +4,16 @@ import { Box, Input, Button, Image } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import Loading from "./Loading";
 import { useToast } from "@chakra-ui/react";
+import { AuthContext } from "./AuthContextProvider";
 function ForgotPasswoard() {
-  const [email, setEmail] = React.useState("");
+  const [email1, setEmail1] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const toast = useToast();
   const navigate = useNavigate();
+  const {email,setEmail}=React.useContext(AuthContext)
+  if(loading){
+    return <Loading/>
+  }
   return (
     <Box>
       <Box background={"#ECECEC"} p={"2em"}>
@@ -26,24 +31,20 @@ function ForgotPasswoard() {
         onSubmit={async (e) => {
           e.preventDefault();
           try {
+            setLoading(true);
             const response = await axios.post(
-              "https://lazy-puce-horse-belt.cyclic.app/user/register-email",
+              "https://costcocombackend-production.up.railway.app/user/register-email",
               {
-                email,
+                email1,
               },
               {
                 withCredentials: true,
               }
             );
             if (response.status === 200) {
-              toast({
-                title: "Account created.",
-                description: "We've created your account for you.",
-                status: "success",
-                duration: 5000,
-                isClosable: true,
-              });
-              navigate("/login");
+              setLoading(false);
+              setEmail(email1);
+              navigate("/forgot-password-varify");
               console.log(response);
             }
           } catch (error) {
@@ -76,7 +77,7 @@ function ForgotPasswoard() {
           type="email"
           placeholder="Enter Your Email"
           name="email"
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => setEmail1(e.target.value)}
         />
         <Button type="submit">Submit</Button>
       </form>

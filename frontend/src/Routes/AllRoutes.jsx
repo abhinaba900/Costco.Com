@@ -11,6 +11,8 @@ import SingleProductData from "../Components/SingleProductData";
 import CartPadge from "../Components/CartPadge";
 import CheckoutPage from "../Components/CheckoutPadge";
 import OrderSuccessful from "../Components/OrderSecessfull";
+import VaryFiForgotData from "../Components/VaryFiForgotData";
+import YourOrder from "../Components/YourOrder";
 function AllRoutes() {
   return (
     <div>
@@ -26,6 +28,8 @@ function AllRoutes() {
         <Route path="/cart" element={<CartPadge />} />
         <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/ordersuccessfull" element={<OrderSuccessful />} />
+        <Route path="/forgot-password-varify" element={<VaryFiForgotData />} />
+        <Route path="/your-order" element={<YourOrder />} />
       </Routes>
     </div>
   );

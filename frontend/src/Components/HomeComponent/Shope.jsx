@@ -37,6 +37,7 @@ function Shope() {
             fontWeight={"normal"}
             justifyContent={"center"}
             ml={"1em"}
+            fontSize={"1.2em"}
           >
             <GiHamburgerMenu /> Shop
           </Text>

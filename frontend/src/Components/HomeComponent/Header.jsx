@@ -139,28 +139,28 @@ function Header() {
         alignItems={{ base: "center", md: "flex-start" }}
         justifyContent={{ base: "center", md: "flex-end" }}
       >
-        <Text mx={"1em"} color={color}>
+        <Text mx={"1em"} color={color} fontSize={"1.2em"}>
           Costco Next
         </Text>
-        <Text mx={"1em"} color={color}>
+        <Text mx={"1em"} color={color} fontSize={"1.2em"}>
           While Supplies Last
         </Text>
-        <Text mx={"1em"} color={color}>
+        <Text mx={"1em"} color={color} fontSize={"1.2em"}>
           Online-Only
         </Text>
-        <Text mx={"1em"} color={color}>
+        <Text mx={"1em"} color={color} fontSize={"1.2em"}>
           Treasure Hunt
         </Text>
-        <Text mx={"1em"} color={color}>
+        <Text mx={"1em"} color={color} fontSize={"1.2em"}>
           What's New
         </Text>
-        <Text mx={"1em"} color={color}>
+        <Text mx={"1em"} color={color} fontSize={"1.2em"}>
           New Lower Prices
         </Text>
-        <Text mx={"1em"} color={color}>
+        <Text mx={"1em"} color={color} fontSize={"1.2em"}>
           Get Email Offers
         </Text>
-        <Text mx={"1em"} color={color}>
+        <Text mx={"1em"} color={color} fontSize={"1.2em"}>
           Customer Service
         </Text>
         {/* Chakra UI Menu for Dropdown */}
@@ -175,6 +175,7 @@ function Header() {
             _focus={{ outline: "none" }}
             onMouseEnter={() => openMenu()} // Open menu on hover
             onMouseLeave={() => closeMenu()} // Close menu on mouse leave
+            fontSize={"1.2em"}
           >
             Us <ChevronDownIcon />
           </MenuButton>
@@ -207,10 +208,11 @@ function Header() {
         <GridItem colSpan={1}>
           <Box>
             <Image
-              w={"12.5em"}
+              w={"14.5em"}
               objectFit="contain"
               src="https://www.costco.com/wcsstore/CostcoGLOBALSAS/images/Costco_Logo-1.png"
               alt="Costco Logo"
+              onClick={() => navigate("/")}
             />
           </Box>
         </GridItem>
@@ -230,7 +232,11 @@ function Header() {
         </GridItem>
 
         <GridItem colSpan={1}>
-          <Flex justifyContent="flex-end" alignItems="center">
+          <Flex
+            justifyContent="flex-end"
+            alignItems="center"
+            fontSize={"1.2em"}
+          >
             {logined ? (
               <UserMenu />
             ) : (
@@ -255,6 +261,8 @@ function Header() {
               background={"none"}
               _hover={{ borderBottom: "2px solid #0060A9" }}
               ml={"1em"}
+              fontSize={"1.2em"}
+              onClick={() => navigate("/your-order")}
             >
               Orders & Returns
             </Button>
@@ -267,6 +275,7 @@ function Header() {
               _hover={{ borderBottom: "2px solid #0060A9" }}
               ml={"1em"}
               onClick={() => navigate("/cart")}
+              fontSize={"1.2em"}
             >
               <FaShoppingCart /> Cart
             </Button>
@@ -293,6 +302,7 @@ function Header() {
             _focus={{ outline: "none" }}
             onMouseEnter={() => openGrocery()} // Open menu on hover
             onMouseLeave={() => closeGrocery()} // Close menu on mouse leave
+            fontSize={"1.2em"}
           >
             Grocery <ChevronDownIcon />
           </MenuButton>
@@ -375,35 +385,85 @@ function Header() {
             </MenuItem>
           </MenuList>
         </Menu>
-        <Text mx={"1em"} color={"white"}>
+        <Text
+          mx={"1em"}
+          color={"white"}
+          fontSize={"1.2em"}
+          _hover={{ borderBottom: "2px solid white" }}
+        >
           Same-Day
         </Text>
-        <Text mx={"1em"} color={"white"}>
+        <Text
+          mx={"1em"}
+          color={"white"}
+          fontSize={"1.2em"}
+          _hover={{ borderBottom: "2px solid white" }}
+        >
           Deals
         </Text>
-        <Text mx={"1em"} color={"white"}>
+        <Text
+          mx={"1em"}
+          color={"white"}
+          fontSize={"1.2em"}
+          _hover={{ borderBottom: "2px solid white" }}
+        >
           Business Delivery
         </Text>
-        <Text mx={"1em"} color={"white"}>
+        <Text
+          mx={"1em"}
+          color={"white"}
+          fontSize={"1.2em"}
+          _hover={{ borderBottom: "2px solid white" }}
+        >
           Optical
         </Text>
-        <Text mx={"1em"} color={"white"}>
+        <Text
+          mx={"1em"}
+          color={"white"}
+          fontSize={"1.2em"}
+          _hover={{ borderBottom: "2px solid white" }}
+        >
           Pharmacy
         </Text>
-        <Text mx={"1em"} color={"white"}>
+        <Text
+          mx={"1em"}
+          color={"white"}
+          fontSize={"1.2em"}
+          _hover={{ borderBottom: "2px solid white" }}
+        >
           Services
         </Text>
 
-        <Text mx={"1em"} color={"white"}>
+        <Text
+          mx={"1em"}
+          color={"white"}
+          fontSize={"1.2em"}
+          _hover={{ borderBottom: "2px solid white" }}
+        >
           Photo
         </Text>
-        <Text mx={"1em"} color={"white"}>
+        <Text
+          mx={"1em"}
+          color={"white"}
+          fontSize={"1.2em"}
+          _hover={{ borderBottom: "2px solid white" }}
+        >
           Travel
         </Text>
-        <Text mx={"1em"} color={"white"}>
+        <Text
+          mx={"1em"}
+          color={"white"}
+          fontSize={"1.2em"}
+          _hover={{ borderBottom: "2px solid white" }}
+        >
           Membership
         </Text>
-        <Text mx={"1em"} color={"white"}>
+        <Text
+          mx={"1em"}
+          color={"white"}
+          fontSize={"1.2em"}
+          _hover={{ borderBottom: "2px solid white" }}
+        >
           Locations
         </Text>
       </Flex>

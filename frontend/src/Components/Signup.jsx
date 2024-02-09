@@ -120,7 +120,7 @@ function Signup() {
         my={"2.5em"}
         p={"1em"}
       >
-        <Heading className="poppins-black" fontSize={"2.25em"}>
+        <Heading className="poppins-black" fontSize={"2.25em"} mb={"2em"}>
           Create Account
         </Heading>
         {loading ? (
