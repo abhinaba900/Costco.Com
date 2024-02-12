@@ -6,26 +6,26 @@ import styles from "./LogoutButton.module.css";
 import { AuthContext } from "../../Components/AuthContextProvider";
 function UserMenu() {
   const { login, setLogin } = React.useContext(AuthContext);
-  
-  const  handaleLogout = async () => {
-      try {
-        const response = await axios.get(
-          "https://costcocombackend-production.up.railway.app/user/logout",
-          {
-            withCredentials: true,
-          }
-        );
-        if (response.status === 200) {
-          setLogin(false);
-          console.log("logout successful");
-        } else {
-          console.log("logout failed");
+
+  const handaleLogout = async () => {
+    try {
+      const response = await axios.get(
+        "https://costcocombackend-production.up.railway.app/user/logout",
+        {
+          withCredentials: true,
         }
-      } catch (error) {
-        console.log(error);
+      );
+      if (response.status === 200) {
+        setLogin(false);
+        localStorage.setItem("login", false);
+        console.log("logout successful");
+      } else {
+        console.log("logout failed");
       }
-    };
- 
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Menu>

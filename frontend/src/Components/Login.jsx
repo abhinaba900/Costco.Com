@@ -52,7 +52,7 @@ function Login() {
       );
       if (response.status === 200) {
         setLoading(false);
-
+        localStorage.setItem("login", true);
         setLogin(true);
         toast({
           title: "Login Successful",

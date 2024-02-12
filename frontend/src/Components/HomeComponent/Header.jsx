@@ -70,10 +70,10 @@ function Header() {
   };
 
   const { login, setLogin } = React.useContext(AuthContext);
-  const [logined, setLogined] = useState(login);
+  const [logined, setLogined] = useState(false);
 
   useEffect(() => {
-    setLogined(login);
+    setLogined(JSON.parse(localStorage.getItem("login")));
   }, [login]);
 
   // Effect for debouncing search input
@@ -123,7 +123,7 @@ function Header() {
       fetchData();
     }
   }, [debouncedSearchTerm]);
-  console.log(logined);
+  console.log(typeof logined);
   return (
     <Box
       w={"100%"}
@@ -237,9 +237,7 @@ function Header() {
             alignItems="center"
             fontSize={"1.2em"}
           >
-            {logined ? (
-              <UserMenu />
-            ) : (
+            {!logined ? (
               <Text
                 cursor={"pointer"}
                 _hover={{ borderBottom: "2px solid #0060A9" }}
@@ -252,6 +250,8 @@ function Header() {
               >
                 Sign In / Register
               </Text>
+            ) : (
+              <UserMenu />
             )}
             <Button
               p={"1.2em"}

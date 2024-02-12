@@ -3,8 +3,10 @@ import styles from "./Button.module.css";
 import axios from "axios";
 import { useToast } from "@chakra-ui/react";
 import AddToCartLoading from "../AddToCartLoading";
+import { useNavigate } from "react-router-dom";
 
 function AddToCartButton({ id }) {
+  const navigate = useNavigate();
   const toast = useToast();
   const [loading, setLoading] = React.useState(false);
   console.log(id);
@@ -44,6 +46,7 @@ function AddToCartButton({ id }) {
         duration: 5000,
         isClosable: true,
       });
+      navigate("/login");
       setLoading(false);
     }
   };
