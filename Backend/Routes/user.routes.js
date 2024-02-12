@@ -1,11 +1,12 @@
 const express = require("express");
 const userRouter = express.Router();
-const {User} = require("../Models/user.models");
+const { User, ForgotCode } = require("../Models/user.models");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const validator = require("validator");
 const nodemailer = require("nodemailer");
 const uuid = require("uuid");
+const { number } = require("yup");
 require("dotenv").config();
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -16,52 +17,72 @@ const transporter = nodemailer.createTransport({
 });
 
 // Dummy database
-let users = {};
 
 // Registration route
-userRouter.post("/register-email", (req, res) => {
-  const { email } = req.body;
-  
-  const userId = uuid.v4();
-  const verificationToken = Math.floor(100000 + Math.random() * 900000); // Generate unique verification token
+userRouter.post("/register-email", async (req, res) => {
+  try {
+    const { email } = req.body;
 
-  // Store user with verification token and not verified status
-  users[userId] = { email, verificationToken, verified: false };
+    const userId = uuid.v4();
+    const verificationToken = Math.floor(100000 + Math.random() * 900000); // Generate unique verification token
 
-  // Email verification link
-  const verificationLink = `${req.url}/user/verify-email?token=${verificationToken}&userId=${userId}`;
+    // Store user with verification token and not verified status
+    const user = new ForgotCode({
+      email,
+      userId,
+      verificationToken,
+      verified: false,
+    });
 
-  const mailOptions = {
-    from: "subhamsana700@gmail.com",
-    to: email,
-    subject: "Verify your email",
-    text: `Please click on the following link to verify your email: go to official website. your varification token is:-"${verificationToken}" and your user id is:-"${userId}" and your varification link is "${verificationLink}"`,
-  };
+    const mailOptions = {
+      from: "subhamsana700@gmail.com",
+      to: email,
+      subject: "Verify your email",
+      text: `Please click on the following link to verify your email: go to official website. your varification token is:-"${verificationToken}" and your user id is:-"${userId}"`,
+    };
 
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.log(error);
-      res.status(500).send("Error sending verification email");
-    } else {
-      console.log("Verification email sent: " + info.response);
-      res
-        .status(200)
-        .send("Registration successful, please verify your email.");
-    }
-  });
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log(error);
+        res.status(500).send("Error sending verification email");
+      } else {
+        console.log("Verification email sent: " + info.response);
+        res
+          .status(200)
+          .send("Registration successful, please verify your email.");
+      }
+    });
+    await user.save();
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error.message);
+  }
 });
 
 // Verification route
-userRouter.post("/verify-email", (req, res) => {
-  const { token, userId } = req.body;
+userRouter.post("/verify-email", async (req, res) => {
+  try {
+    const { token, userId } = req.body;
 
-  const user = users[userId];
+    // Validate input
+    if (!userId || !token) {
+      return res.status(400).send("Missing token or user ID.");
+    }
 
-  if (user && user.verificationToken === token) {
-    user.verified = true; // Mark the user as verified
-    res.send("Email successfully verified.");
-  } else {
-    res.status(400).send("Invalid or expired verification link.");
+    const user = await ForgotCode.findOne({ userId });
+
+    // Check if user exists and token matches
+    if (!user) {
+      return res.status(404).send("User not found.");
+    } else if (Number(user.verificationToken) !== Number(token)) {
+      return res.status(400).send("Invalid or expired verification link.");
+    }
+
+    // Mark the user as verified
+    res.status(200).send("Email successfully verified.");
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error.message);
   }
 });
 userRouter.post("/register", async (req, res) => {
@@ -108,7 +129,12 @@ userRouter.post("/register", async (req, res) => {
 
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = new User({ name, email, password: hashedPassword });
+    const user = new User({
+      name,
+      email,
+      password: hashedPassword,
+      userId: uuid.v4(),
+    });
     await user.save();
     // 201 Created is appropriate for successful resource creation
     res.status(201).json({ message: "User created successfully" });
@@ -152,25 +178,28 @@ userRouter.post("/login", async (req, res) => {
     const refreshToken = jwt.sign(
       { userId: findEmail._id },
       process.env.REFRESH_key, // Ensure your environment variables are consistently named
-      { expiresIn: "7d" }
+      { expiresIn: "1d" }
     );
 
     res.cookie("authToken", authToken, {
-      maxAge: 24 * 60 * 60 * 1000,
+      maxAge: 60 * 60 * 1000,
       sameSite: "none",
       secure: true,
     });
 
     res.cookie("refreshToken", refreshToken, {
-      maxAge: 7 * 24 * 60 * 60 * 1000,
+      maxAge: 24 * 60 * 60 * 1000,
       sameSite: "none",
       secure: true,
     });
 
     // 200 OK or 202 Accepted is more appropriate for a successful operation
-    res
-      .status(200)
-      .json({ message: "Login successfully", authToken, refreshToken });
+    res.status(200).json({
+      message: "Login successfully",
+      authToken,
+      refreshToken,
+      userId: findEmail._id,
+    });
   } catch (error) {
     // 500 Internal Server Error is appropriate for server errors
     res.status(500).json({ message: error.message });
@@ -203,7 +232,7 @@ userRouter.patch("/forgot/password", async (req, res) => {
     })
   ) {
     // 422 Unprocessable Entity for weak password, though 400 could also be argued for consistency
-    return res.status(422).json({
+    return res.status(402).json({
       message:
         "Password must be stronger. It should contain at least 8 characters, including an uppercase letter, a lowercase letter, a number, and a symbol.",
     });
@@ -228,8 +257,21 @@ userRouter.patch("/forgot/password", async (req, res) => {
 
 userRouter.get("/logout", (req, res) => {
   try {
-    res.clearCookie("authToken");
-    res.clearCookie("refreshToken");
+    const { authToken, refreshToken } = req.cookies;
+    res.clearCookie("authToken", authToken, {
+      expires: new Date(0),
+      path: "/",
+      domain: "https://costco-com-i4c5.vercel.app",
+      secure: true,
+      sameSite: "none",
+    });
+    res.clearCookie("refreshToken", refreshToken, {
+      expires: new Date(0),
+      path: "/",
+      domain: "https://costco-com-i4c5.vercel.app",
+      secure: true,
+      sameSite: "none",
+    });
     res.status(200).json({ message: "Logout successfully" });
   } catch (error) {
     res.status(500).json({ message: error.message });
