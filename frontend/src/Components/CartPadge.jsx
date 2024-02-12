@@ -65,13 +65,14 @@ function CartPage() {
 
   const removeItem = async (id) => {
     try {
-      const response = await fetch(
+      const response = await axios.delete(
         `https://costcocombackend-production.up.railway.app/cart/${id}`,
         {
-          method: "DELETE",
+          withCredentials: true,
         }
       );
-      if (response.ok) {
+      if (response.status === 200) {
+        // Check for success response
         setItems((currentItems) =>
           currentItems.filter((item) => item.id !== id)
         );
