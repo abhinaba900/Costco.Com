@@ -13,6 +13,7 @@ import CheckoutPage from "../Components/CheckoutPadge";
 import OrderSuccessful from "../Components/OrderSecessfull";
 import VaryFiForgotData from "../Components/VaryFiForgotData";
 import YourOrder from "../Components/YourOrder";
+import NewPassward from "../Components/NewPassward";
 function AllRoutes() {
   return (
     <div>
@@ -30,6 +31,7 @@ function AllRoutes() {
         <Route path="/ordersuccessfull" element={<OrderSuccessful />} />
         <Route path="/forgot-password-varify" element={<VaryFiForgotData />} />
         <Route path="/your-order" element={<YourOrder />} />
+        <Route path="/new-password" element={<NewPassward />} />
       </Routes>
     </div>
   );

@@ -6,13 +6,46 @@ import Loading from "./Loading";
 import { useToast } from "@chakra-ui/react";
 import { AuthContext } from "./AuthContextProvider";
 function ForgotPasswoard() {
-  const [email1, setEmail1] = React.useState("");
+  const [email, setEmail1] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const toast = useToast();
   const navigate = useNavigate();
-  const {email,setEmail}=React.useContext(AuthContext)
-  if(loading){
-    return <Loading/>
+  const { setEmail } = React.useContext(AuthContext);
+
+  const handleSubmit = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.post(
+        "https://costcocombackend-production.up.railway.app/user/register-email",
+        {
+          email
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      console.log(response);
+      if (response.status === 200) {
+        setLoading(false);
+        setEmail(email);
+        navigate("/forgot-password-varify");
+        console.log(response);
+      }
+    } catch (error) {
+      setLoading(false);
+      toast({
+        title: "Error. Please try again.",
+        description: error.response.data.message,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+  if (loading) {
+    return <Loading />;
   }
   return (
     <Box>
@@ -28,34 +61,9 @@ function ForgotPasswoard() {
         />
       </Box>
       <form
-        onSubmit={async (e) => {
+        onSubmit={(e) => {
           e.preventDefault();
-          try {
-            setLoading(true);
-            const response = await axios.post(
-              "https://costcocombackend-production.up.railway.app/user/register-email",
-              {
-                email1,
-              },
-              {
-                withCredentials: true,
-              }
-            );
-            if (response.status === 200) {
-              setLoading(false);
-              setEmail(email1);
-              navigate("/forgot-password-varify");
-              console.log(response);
-            }
-          } catch (error) {
-            toast({
-              title: "Error. Please try again.",
-              description: error.response.data.message,
-              status: "error",
-              duration: 5000,
-              isClosable: true,
-            });
-          }
+          handleSubmit();
         }}
         style={{
           display: "flex",
@@ -77,9 +85,10 @@ function ForgotPasswoard() {
           type="email"
           placeholder="Enter Your Email"
           name="email"
+          value={email}
           onChange={(e) => setEmail1(e.target.value)}
         />
-        <Button type="submit">Submit</Button>
+        <Input type="submit" value="Submit" />
       </form>
     </Box>
   );

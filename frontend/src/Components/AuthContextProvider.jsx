@@ -4,9 +4,19 @@ function AuthContextProvider({ children }) {
   const [Products, setProducts] = React.useState([]);
   const [login, setLogin] = React.useState(false);
   const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
   return (
     <AuthContext.Provider
-      value={{ Products, setProducts, login, setLogin, email, setEmail }}
+      value={{
+        Products,
+        setProducts,
+        login,
+        setLogin,
+        email,
+        setEmail,
+        password,
+        setPassword,
+      }}
     >
       {children}
     </AuthContext.Provider>

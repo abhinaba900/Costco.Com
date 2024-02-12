@@ -10,6 +10,7 @@ import {
   faTimes,
   faLongArrowAltLeft,
 } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 
 function CartPage() {
   const navigate = useNavigate();
@@ -18,10 +19,11 @@ function CartPage() {
   useEffect(() => {
     async function fetchCartItems() {
       try {
-        const response = await fetch(
-          "https://costcocombackend-production.up.railway.app/cart"
+        const response = await axios.get(
+          "https://costcocombackend-production.up.railway.app/cart",
+          { withCredentials: true }
         );
-        const data = await response.json();
+        const data = response.data;
 
         let quantity = 0;
         data.forEach((item) => {
@@ -37,6 +39,7 @@ function CartPage() {
         );
       } catch (error) {
         console.error("Failed to fetch cart items:", error);
+        
       }
     }
 

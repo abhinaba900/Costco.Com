@@ -12,7 +12,9 @@ function AddToCartButton({ id }) {
     try {
       setLoading(true);
       const response = await axios.post(
-        "https://costcocombackend-production.up.railway.app/cart/" + id
+        `https://costcocombackend-production.up.railway.app/cart/${id}`,
+        {},
+        { withCredentials: true }
       );
       console.log(response);
       if (response.status == 200) {
@@ -27,7 +29,7 @@ function AddToCartButton({ id }) {
       } else {
         toast({
           title: "Error",
-          description: "Something went wrong",
+          description: response.data.message,
           status: "error",
           duration: 5000,
           isClosable: true,
@@ -35,6 +37,7 @@ function AddToCartButton({ id }) {
         setLoading(false);
       }
     } catch (error) {
+      console.log("catch");
       toast({
         title: "Error",
         description: error.message,
