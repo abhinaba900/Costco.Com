@@ -39,7 +39,6 @@ function CartPage() {
         );
       } catch (error) {
         console.error("Failed to fetch cart items:", error);
-        
       }
     }
 

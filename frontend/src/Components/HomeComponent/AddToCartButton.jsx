@@ -29,7 +29,7 @@ function AddToCartButton({ id }) {
       } else {
         toast({
           title: "Error",
-          description: response.data.message,
+          description: "Please login",
           status: "error",
           duration: 5000,
           isClosable: true,
@@ -37,10 +37,9 @@ function AddToCartButton({ id }) {
         setLoading(false);
       }
     } catch (error) {
-      console.log("catch");
       toast({
         title: "Error",
-        description: error.message,
+        description: "please login to add",
         status: "error",
         duration: 5000,
         isClosable: true,
