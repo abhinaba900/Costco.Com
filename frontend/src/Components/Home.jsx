@@ -21,9 +21,11 @@ function Home() {
             withCredentials: true,
           }
         );
+
         console.log(response);
       } catch (error) {
         console.log(error);
+        setLogin(false);
       }
     }
     fetchData();

@@ -74,7 +74,7 @@ function Header() {
 
   useEffect(() => {
     setLogined(JSON.parse(localStorage.getItem("login")));
-  }, []);
+  }, [login]);
 
   // Effect for debouncing search input
 

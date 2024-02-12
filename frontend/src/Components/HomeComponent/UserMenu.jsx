@@ -16,9 +16,9 @@ function UserMenu() {
         }
       );
       if (response.status === 200) {
-        setLogin(false);
         localStorage.setItem("login", false);
         console.log("logout successful");
+        setLogin(false);
       } else {
         console.log("logout failed");
       }
