@@ -106,8 +106,8 @@ function Header() {
       async function fetchData() {
         try {
           const response = await axios.get(
-            "https://costcocombackend-production.up.railway.app/products?search=" +
-              debouncedSearchTerm
+            `https://costcocombackend-production.up.railway.app/products?search=${debouncedSearchTerm}`,
+            { withCredentials: true }
           );
           console.log(response.data.length);
           if (response.data.length === 0) {
