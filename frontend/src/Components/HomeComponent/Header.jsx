@@ -34,6 +34,7 @@ function Header() {
   const closeTimeoutId = React.useRef();
   const [mobileView, setMobileView] = React.useState(false);
   const [Search, setSearch] = React.useState("");
+  const { Products, setProducts } = React.useContext(AuthContext);
 
   React.useEffect(() => {
     const handleResize = () => {
@@ -109,9 +110,9 @@ function Header() {
             `https://costcocombackend-production.up.railway.app/products?search=${debouncedSearchTerm}`,
             { withCredentials: true }
           );
-          console.log(response.data.length);
-          if (response.data.length === 0) {
-            navigate("/error");
+          console.log(response.data);
+          if (response.status === 200) {
+            setProducts(response.data);
           } else {
             navigate("/products");
           }
@@ -123,7 +124,7 @@ function Header() {
       fetchData();
     }
   }, [debouncedSearchTerm]);
-  console.log(typeof logined);
+
   return (
     <Box
       w={"100%"}

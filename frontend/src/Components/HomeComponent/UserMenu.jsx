@@ -6,6 +6,7 @@ import styles from "./LogoutButton.module.css";
 import { AuthContext } from "../../Components/AuthContextProvider";
 function UserMenu() {
   const { login, setLogin } = React.useContext(AuthContext);
+  
 
   const handaleLogout = async () => {
     try {

@@ -34,8 +34,8 @@ function Products() {
           setProducts(allProducts);
           setLoading(false);
         } else {
-          throw new Error("allProducts key not found");
           setLoading(false);
+          throw new Error("allProducts key not found");
         }
       } catch (error) {
         console.error(error);
